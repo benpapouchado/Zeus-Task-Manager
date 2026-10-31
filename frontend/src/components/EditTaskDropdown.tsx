@@ -1,4 +1,5 @@
 import { useState } from 'react';
+const API_URL = import.meta.env.VITE_API_URL;
 
 export function EditTaskDropdown(id: number, row: number, taskStatus: string, changeStatus: string, {
     setDropdownOpenOnRow,
@@ -10,7 +11,7 @@ export function EditTaskDropdown(id: number, row: number, taskStatus: string, ch
     fetchAllTasks: () => void;
 }) {
 
-    const API_URL = "http://localhost:8080";
+
 
     const statuses = {
         todo: "Todo",

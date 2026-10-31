@@ -2,6 +2,8 @@ import "bulma/css/bulma.min.css";
 import "../App.css";
 import { useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export function CreateTaskModal({
     setSelectedTaskButton,
     fetchAllTasks,
@@ -10,7 +12,7 @@ export function CreateTaskModal({
     fetchAllTasks: () => void;
 }) {
 
-    const API_URL = "http://localhost:8080";
+
 
     const statuses = {
         todo: "Todo",

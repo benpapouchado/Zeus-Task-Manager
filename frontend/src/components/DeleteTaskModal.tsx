@@ -1,4 +1,5 @@
 
+const API_URL = import.meta.env.VITE_API_URL;
 
 export function DeleteTaskModal(ids: number[], {
     setSelectedTaskButton,
@@ -8,7 +9,6 @@ export function DeleteTaskModal(ids: number[], {
     fetchAllTasks: () => void;
 }) {
 
-    const API_URL = "http://localhost:8080";
 
     const deleteTasks = async () => {
         try {
