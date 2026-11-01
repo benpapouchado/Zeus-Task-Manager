@@ -129,6 +129,17 @@ export default function Tasks() {
         setChecked(allBoxesChecked ? tasks.map((row) => row.id) : []);
     }
 
+    const formatDate = (date: string) => {
+    return new Date(date).toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+    }).replace(",", "");
+};
+
     return (
         <main >
             <section>
@@ -237,7 +248,7 @@ export default function Tasks() {
                                     fetchAllTasks={fetchAllTasks}
                                 />
                             </td>
-                            <td>{task.dueDate}</td>
+                            <td>{formatDate(task.dueDate)}</td>
                         </tr>
                     ))}
                 </tbody>
