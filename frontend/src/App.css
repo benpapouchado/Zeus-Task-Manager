@@ -180,8 +180,8 @@ body,
 }
 
 .status-button {
-    width: 15vw;
-    max-width: 15vw;
-    min-width: 15vw;
+    width: 10vw;
+    max-width: 10vw;
+    min-width: 10vw;
     white-space: nowrap;
 }
