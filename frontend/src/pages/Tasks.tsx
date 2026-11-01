@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext, createContext } from 'react';
 import { CreateTaskModal } from '../components/CreateTaskModal';
 import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { EditTaskDropdown } from '../components/EditTaskDropdown';
@@ -37,8 +37,7 @@ export default function Tasks() {
     const [searchID, setSearchID] = useState('');
     const [allChecked, setAllChecked] = useState(false);
     const [checked, setChecked] = useState<number[]>([]);
-    const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number>(-1);
-    const [changeStatus, setChangeStatus] = useState("");
+    const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
 
     const taskButton = (label: string) =>
         <div className="level-item">
@@ -108,6 +107,7 @@ export default function Tasks() {
             }
 
             const data = await response.json();
+            data.sort((a: Task, b: Task) => a.id - b.id);
             setCount(data.length);
             setTasks(data);
 
@@ -228,11 +228,15 @@ export default function Tasks() {
                             <td>#{task.id}</td>
                             <td>{task.title}</td>
                             <td>{task.description}</td>
-                            <td>{EditTaskDropdown(task.id, dropdownOpenOnRow, task.status, changeStatus, {
-                                setDropdownOpenOnRow,
-                                setChangeStatus,
-                                fetchAllTasks,
-                            })}</td>
+                            <td>
+                                <EditTaskDropdown
+                                    id={task.id}
+                                    isOpen={dropdownOpenOnRow === task.id}
+                                    taskStatus={task.status}
+                                    setDropdownOpenOnRow={setDropdownOpenOnRow}
+                                    fetchAllTasks={fetchAllTasks}
+                                />
+                            </td>
                             <td>{task.dueDate}</td>
                         </tr>
                     ))}

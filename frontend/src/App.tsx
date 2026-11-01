@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Calendar from "./pages/Calendar";
 import "./App.css";
+import "bulma/css/bulma.min.css";
 
 export default function App() {
   return (

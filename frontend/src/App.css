@@ -178,3 +178,10 @@ body,
   color: #243047;
   background-color: #f0f4ff;
 }
+
+.status-button {
+    width: 15vw;
+    max-width: 15vw;
+    min-width: 15vw;
+    white-space: nowrap;
+}
