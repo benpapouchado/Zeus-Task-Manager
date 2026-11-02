@@ -22,11 +22,11 @@ export function EditTaskDropdown({
         "Done",
     ];
 
-const statusStyles: Record<string, string> = {
-    "Todo": "is-warning",
-    "In Progress": "is-info",
-    "Done": "is-success",
-};
+    const statusStyles: Record<string, string> = {
+        "Todo": "is-warning",
+        "In Progress": "is-info",
+        "Done": "is-success",
+    };
 
     const buttonStyle = "button is-rounded is-fullwidth is-dark is-outlined " + statusStyles[taskStatus];
 
@@ -82,7 +82,7 @@ const statusStyles: Record<string, string> = {
                             key={status}
                             type="button"
                             className="dropdown-item"
-                            onClick={() => editTaskStatus(status)                              
+                            onClick={() => editTaskStatus(status)
                             }
                         >
                             {status}
