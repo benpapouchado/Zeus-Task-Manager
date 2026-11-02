@@ -20,8 +20,8 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function Tasks() {
 
     const taskActions = {
-        newTask: "+ New Task",
-        delete: "\u2716 Delete Task"
+        newTask: "New Task",
+        delete: "Delete Task"
     };
 
     const statuses = {
@@ -52,6 +52,9 @@ export default function Tasks() {
                     backgroundColor: "#7e1212",
                 }}
                 onClick={() => setSelectedTaskButton(label)}>
+                <span className="icon mr-1">
+                    <i className="far fa-plus-square"></i>
+                </span>
                 {label}
             </button>
         </div>
@@ -65,6 +68,9 @@ export default function Tasks() {
                             color: "white",
                             backgroundColor: "#bb5e5e",
                         }}>
+                        <span className="icon mr-1">
+                            <i className="fas fa-trash"></i>
+                        </span>
                         {label + rows}
                     </button>
                 </div>
@@ -78,6 +84,9 @@ export default function Tasks() {
                             backgroundColor: "#7e1212",
                         }}
                         onClick={() => setSelectedTaskButton(label)}>
+                        <span className="icon mr-1">
+                            <i className="fas fa-trash"></i>
+                        </span>
                         {label + rows}
                     </button>
                 </div>
