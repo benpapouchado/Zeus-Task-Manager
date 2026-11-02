@@ -1,8 +1,6 @@
-import { useState } from "react";
-
 const API_URL = import.meta.env.VITE_API_URL;
 
-type Props = {
+type Dropdown = {
     id: number;
     isOpen: boolean;
     taskStatus: string;
@@ -16,7 +14,7 @@ export function EditTaskDropdown({
     taskStatus,
     setDropdownOpenOnRow,
     fetchAllTasks,
-}: Props) {
+}: Dropdown) {
 
     const statuses = [
         "Todo",

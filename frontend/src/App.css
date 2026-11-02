@@ -105,7 +105,6 @@ body,
 .rounded-table {
     border: 1px solid #dbdbdb;
     border-radius: 12px;
-    overflow: hidden;
 }
 
 .rounded-table .task-table {
