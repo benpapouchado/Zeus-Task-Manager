@@ -228,8 +228,8 @@ export default function Tasks() {
                             </label></th>
                             <th>ID</th>
                             <th>TITLE</th>
-                            <th>DESCRIPTION</th>
                             <th>STATUS</th>
+                            <th>DESCRIPTION</th>                            
                             <th>DUE DATE</th>
                         </tr>
                     </thead>
@@ -245,7 +245,6 @@ export default function Tasks() {
                                 </label></td>
                                 <td>#{task.id}</td>
                                 <td>{task.title}</td>
-                                <td>{task.description}</td>
                                 <td>
                                     <EditTaskDropdown
                                         id={task.id}
@@ -254,7 +253,9 @@ export default function Tasks() {
                                         setDropdownOpenOnRow={setDropdownOpenOnRow}
                                         fetchAllTasks={fetchAllTasks}
                                     />
-                                </td>
+                                </td>                                
+                                <td>{task.description}</td>
+
                                 <td>{formatDate(task.dueDate)}</td>
                             </tr>
                         ))}

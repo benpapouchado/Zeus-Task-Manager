@@ -101,21 +101,22 @@ body,
   position: relative;
   z-index: 1;
 }
+
 .rounded-table {
-    border-radius: 12px;
     border: 1px solid #dbdbdb;
-}
-
-.rounded-table .table {
-    margin-bottom: 0;
     border-radius: 12px;
+    overflow: hidden;
 }
 
-.rounded-table .table thead th {
-    background-color: #fff4d9 !important;
-    color: #5b5959 !important;
-    font-weight: 600;
-    border-color: #e0dfdd !important;
+.rounded-table .task-table {
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+}
+
+.rounded-table .task-table th,
+.rounded-table .task-table td {
+    border-width: 0 0 1px;
 }
 
 .title {
