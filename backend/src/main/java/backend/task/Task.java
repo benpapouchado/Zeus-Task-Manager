@@ -18,16 +18,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 200)
+    @Column(name = "title", length = 50, nullable = false)
     private String title;
 
     @Column(name = "description", length = 1000, nullable = true)
     private String description;
 
-    @Column(name = "status", length = 50)
+    @Column(name = "status", length = 50, nullable = false)
     private String status;
 
-    @Column(name = "due_date")
+    @Column(name = "due_date", nullable = false)
     private LocalDateTime dueDate;
 
     protected Task() {

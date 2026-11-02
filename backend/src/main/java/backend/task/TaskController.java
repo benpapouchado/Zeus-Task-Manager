@@ -55,43 +55,51 @@ public class TaskController {
 
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Task> getTask(@PathVariable Long id) {
-        if (!repository.existsById(id)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Task not found");
-        }
+        if (Validation.isValidId(id) && repository.existsById(id)) {
+
         return repository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Task> createTask(
             @Valid @RequestBody CreateTaskRequest request) {
+
+        if (Validation.isValidTask(new Task(
+                request.title().trim(),
+                request.description().trim(),
+                request.status().trim(),
+                request.dueDate()))) {
+
         return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(new Task(
                 request.title().trim(),
                 request.description().trim(),
                 request.status().trim(),
                 request.dueDate())));
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<Void> updateTaskStatusById(@PathVariable Long id, @RequestBody Task entity) {
-        if (!repository.existsById(id)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Task not found");
+
+        if (Validation.isValidId(id) && repository.existsById(id)) {
+            repository.updateTaskById(id, entity.getStatus());
+            return ResponseEntity.ok().build();
         }
-        repository.updateTaskById(id, entity.getStatus());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("delete")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteMultipleTasks(@RequestParam List<Long> ids) {
         for (Long id : ids) {
-            if (!repository.existsById(id)) {
-                throw new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Task not found");
+            if (!Validation.isValidId(id) || !repository.existsById(id)) {
+                return ResponseEntity.notFound().build();
             }
         }
         repository.deleteRows(ids);
