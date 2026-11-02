@@ -13,11 +13,10 @@ type Search = {
     searchId: string | null;
     setSearchId: (value: number | null) => void;
     setSelectedFilterButton: (filterButton: string | null) => void;
-    searchResult: Task | null;
     setSearchResult: (task: Task | null) => void;
 }
 
-export function FetchTaskById({ searchId, setSearchId, setSelectedFilterButton, searchResult, setSearchResult }: Search) {
+export function FetchTaskById({ searchId, setSearchId, setSelectedFilterButton, setSearchResult }: Search) {
 
     const fetchTaskById = async () => {
         const id = Number(searchId?.trim());

@@ -198,7 +198,6 @@ export default function Tasks() {
                     searchId={searchId?.toString() ?? null}
                     setSearchId={setSearchId}
                     setSelectedFilterButton={setSelectedFilterButton}
-                    searchResult={searchResult}
                     setSearchResult={setSearchResult}
                 />
 
