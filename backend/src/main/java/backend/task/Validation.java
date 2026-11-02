@@ -1,6 +1,7 @@
 package backend.task;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Validation {
 
@@ -56,6 +57,15 @@ public class Validation {
             return true;
         }
         throw new IllegalArgumentException("Invalid ID: " + id);
+    }
+
+    public static boolean isValidTasks(List<Task> tasks) {
+        for (Task task : tasks) {
+            if (!isValidTask(task)) {
+                throw new IllegalArgumentException("Invalid task: " + task);
+            }
+        }
+        return true;
     }
 
 }

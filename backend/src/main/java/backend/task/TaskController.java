@@ -50,7 +50,11 @@ public class TaskController {
 
     @GetMapping("/retrieve")
     public ResponseEntity<List<Task>> getTasks() {
+        List<Task> tasks = repository.findAll();
+        if (Validation.isValidTasks(tasks)) {
         return ResponseEntity.ok(repository.findAll());
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/retrieve/{id}")
