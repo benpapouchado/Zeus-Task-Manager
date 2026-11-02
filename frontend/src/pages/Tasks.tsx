@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext, createContext } from 'react';
+import { FetchTaskById } from '../components/RetrieveTask';
 import { CreateTaskModal } from '../components/CreateTaskModal';
 import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { EditTaskDropdown } from '../components/EditTaskDropdown';
@@ -31,11 +32,16 @@ export default function Tasks() {
     }
 
     const [tasks, setTasks] = useState<Task[]>([]);
+
     const [selectedTaskButton, setSelectedTaskButton] = useState<string | null>(null);
     const [selectedFilterButton, setSelectedFilterButton] = useState<string | null>(statuses.all);
-    const [searchID, setSearchID] = useState<number>();
+
+    const [searchId, setSearchId] = useState<number | null>(null);
+    const [searchResult, setSearchResult] = useState<Task | null>(null);
+
     const [allChecked, setAllChecked] = useState(false);
     const [checked, setChecked] = useState<number[]>([]);
+
     const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
 
     const taskButton = (label: string) =>
@@ -116,7 +122,7 @@ export default function Tasks() {
 
     useEffect(() => {
         fetchAllTasks();
-    }, []);
+    }, [searchResult]);
 
     const checkboxAddsToDeleteList = (id: number) => {
         setChecked(checked.includes(id) ? checked.filter(checkedId => checkedId !== id) : [...checked, id]);
@@ -141,6 +147,7 @@ export default function Tasks() {
     const filteredTasks = selectedFilterButton === statuses.all ? tasks :
         tasks.filter((t: Task) => t.status === selectedFilterButton);
 
+    const filteredTasksWithSearch = searchResult ? [searchResult] : filteredTasks;
 
     return (
         <main >
@@ -174,28 +181,17 @@ export default function Tasks() {
             <div className="columns is-vcentered">
                 <div className="column is-narrow">
                     <p className="subtitle is-5">
-                        <strong>{filteredTasks.length}</strong> tasks
+                        <strong>{filteredTasksWithSearch.length}</strong> tasks
                     </p>
                 </div>
 
-                <div className="column is-narrow">
-                    <div className="field has-addons">
-                        <p className="control">
-                            <input
-                                value={searchID}
-                                className="input"
-                                type="text"
-                                placeholder="Find a task"
-                                onChange={(e) => setSearchID(Number(e.target.value))}
-                            />
-                        </p>
-                        <p className="control">
-                            <button className="button"
-
-                            >Search</button>
-                        </p>
-                    </div>
-                </div>
+                <FetchTaskById
+                    searchId={searchId?.toString() ?? null}
+                    setSearchId={setSearchId}
+                    setSelectedFilterButton={setSelectedFilterButton}
+                    searchResult={searchResult}
+                    setSearchResult={setSearchResult}
+                />
 
                 <div className="column">
                     <div className="columns is-variable is-2">
@@ -229,12 +225,12 @@ export default function Tasks() {
                             <th>ID</th>
                             <th>TITLE</th>
                             <th>STATUS</th>
-                            <th>DESCRIPTION</th>                            
+                            <th>DESCRIPTION</th>
                             <th>DUE DATE</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredTasks.map((task: Task) => (
+                        {filteredTasksWithSearch.map((task: Task) => (
                             <tr key={task.id}>
                                 <td><label className="checkbox">
                                     <input type="checkbox"
@@ -253,7 +249,7 @@ export default function Tasks() {
                                         setDropdownOpenOnRow={setDropdownOpenOnRow}
                                         fetchAllTasks={fetchAllTasks}
                                     />
-                                </td>                                
+                                </td>
                                 <td>{task.description}</td>
 
                                 <td>{formatDate(task.dueDate)}</td>
