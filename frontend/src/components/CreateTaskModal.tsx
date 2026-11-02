@@ -18,7 +18,7 @@ export function CreateTaskModal({
         todo: "Todo",
         inProgress: "In Progress",
         done: "Done",
-    }    
+    }
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -105,8 +105,12 @@ export function CreateTaskModal({
                         </div>
                     </div>
 
+                    <div>
+                        <label className="label">Status</label>
+                    </div>
                     <div className="column">
                         <div className="columns is-variable is-1">
+
                             <div className="column">
                                 {selectStatusButton(statuses.todo)}
                             </div>
@@ -120,7 +124,7 @@ export function CreateTaskModal({
                     </div>
 
                     <div className="field">
-                        <label className="label">DUE DATE</label>
+                        <label className="label">Due Date</label>
                         <div className="control">
                             <input
                                 className="datetime-picker task-datetime is-fullwidth"
