@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, createContext } from 'react';
+import { useEffect, useState } from 'react';
 import { FetchTaskById } from '../components/RetrieveTask';
 import { CreateTaskModal } from '../components/CreateTaskModal';
 import { DeleteTaskModal } from '../components/DeleteTaskModal';
@@ -38,6 +38,7 @@ export default function Tasks() {
 
     const [searchId, setSearchId] = useState<number | null>(null);
     const [searchResult, setSearchResult] = useState<Task | null>(null);
+    const [searchError, setSearchError] = useState<boolean>(false);
 
     const [allChecked, setAllChecked] = useState(false);
     const [checked, setChecked] = useState<number[]>([]);
@@ -158,6 +159,16 @@ export default function Tasks() {
 
     const filteredTasksWithSearch = searchResult ? [searchResult] : filteredTasks;
 
+    useEffect(() => {
+        if (!searchError) return;
+
+        const timeout = setTimeout(() => {
+            setSearchError(false);
+        }, 3000);
+
+        return () => clearTimeout(timeout);
+    }, [searchError]);
+
     return (
         <main >
             <section>
@@ -199,6 +210,7 @@ export default function Tasks() {
                     setSearchId={setSearchId}
                     setSelectedFilterButton={setSelectedFilterButton}
                     setSearchResult={setSearchResult}
+                    setSearchError={setSearchError}
                 />
 
                 <div className="column">
@@ -218,8 +230,12 @@ export default function Tasks() {
                     </div>
                 </div>
             </div>
-
-
+            {searchError && (
+                <div className="notification is-danger is-light ">
+                    <p className="has-text-danger is-large">Task not found</p>
+                </div>
+            )}
+            {/* {clearErrorMessage} */}
             <div className="rounded-table">
                 <table className="table is-hoverable is-fullwidth rounded-table task-table">
                     <thead>

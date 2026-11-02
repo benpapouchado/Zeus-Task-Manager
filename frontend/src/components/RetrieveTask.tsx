@@ -1,4 +1,3 @@
-import { useState } from 'react';
 const API_URL = import.meta.env.VITE_API_URL;
 
 type Task = {
@@ -14,9 +13,10 @@ type Search = {
     setSearchId: (value: number | null) => void;
     setSelectedFilterButton: (filterButton: string | null) => void;
     setSearchResult: (task: Task | null) => void;
+    setSearchError: (error: boolean) => void;
 }
 
-export function FetchTaskById({ searchId, setSearchId, setSelectedFilterButton, setSearchResult }: Search) {
+export function FetchTaskById({ searchId, setSearchId, setSelectedFilterButton, setSearchResult, setSearchError }: Search) {
 
     const fetchTaskById = async () => {
         const id = Number(searchId?.trim());
@@ -30,23 +30,28 @@ export function FetchTaskById({ searchId, setSearchId, setSelectedFilterButton, 
             );
 
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                setSearchError(true);
+                setSearchResult(null);
+                return;
             }
 
             if (response.ok) {
             const data : Task = await response.json();
             setSearchResult(data);
+            setSearchError(false);
             setSelectedFilterButton("All");              
             }
 
         } catch (error) {
             console.error('Error fetching tasks:', error);
+            setSearchError(true);
         }
     };
 
     const clearSearch = () => {
         setSearchId(null);
         setSearchResult(null);
+        setSearchError(false);
     };
 
     return (
