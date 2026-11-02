@@ -31,10 +31,9 @@ export default function Tasks() {
     }
 
     const [tasks, setTasks] = useState<Task[]>([]);
-    const [count, setCount] = useState(0);
     const [selectedTaskButton, setSelectedTaskButton] = useState<string | null>(null);
     const [selectedFilterButton, setSelectedFilterButton] = useState<string | null>(statuses.all);
-    const [searchID, setSearchID] = useState('');
+    const [searchID, setSearchID] = useState<number>();
     const [allChecked, setAllChecked] = useState(false);
     const [checked, setChecked] = useState<number[]>([]);
     const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
@@ -108,7 +107,6 @@ export default function Tasks() {
 
             const data = await response.json();
             data.sort((a: Task, b: Task) => a.id - b.id);
-            setCount(data.length);
             setTasks(data);
 
         } catch (error) {
@@ -130,15 +128,19 @@ export default function Tasks() {
     }
 
     const formatDate = (date: string) => {
-    return new Date(date).toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hourCycle: "h23",
-    }).replace(",", "");
-};
+        return new Date(date).toLocaleString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hourCycle: "h23",
+        }).replace(",", "");
+    };
+
+    const filteredTasks = selectedFilterButton === statuses.all ? tasks :
+        tasks.filter((t: Task) => t.status === selectedFilterButton);
+
 
     return (
         <main >
@@ -172,7 +174,7 @@ export default function Tasks() {
             <div className="columns is-vcentered">
                 <div className="column is-narrow">
                     <p className="subtitle is-5">
-                        <strong>{count}</strong> tasks
+                        <strong>{filteredTasks.length}</strong> tasks
                     </p>
                 </div>
 
@@ -180,13 +182,17 @@ export default function Tasks() {
                     <div className="field has-addons">
                         <p className="control">
                             <input
+                                value={searchID}
                                 className="input"
                                 type="text"
                                 placeholder="Find a task"
+                                onChange={(e) => setSearchID(Number(e.target.value))}
                             />
                         </p>
                         <p className="control">
-                            <button className="button">Search</button>
+                            <button className="button"
+
+                            >Search</button>
                         </p>
                     </div>
                 </div>
@@ -210,49 +216,51 @@ export default function Tasks() {
             </div>
 
 
-            <table className="table is-hoverable is-fullwidth is-rounded">
-                <thead>
-                    <tr>
-                        <th><label className="checkbox">
-                            <input type="checkbox"
-                                checked={allChecked}
-                                onChange={(e) => checkAllBoxes(e.target.checked)}
-                            />
-                        </label></th>
-                        <th>Id</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Due Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {tasks.map((task: Task) => (
-                        <tr key={task.id}>
-                            <td><label className="checkbox">
+            <div className="rounded-table">
+                <table className="table is-hoverable is-fullwidth rounded-table task-table">
+                    <thead>
+                        <tr>
+                            <th><label className="checkbox">
                                 <input type="checkbox"
-                                    value={task.id}
-                                    checked={checked.includes(task.id)}
-                                    onChange={(e) => checkboxAddsToDeleteList(Number(e.target.value))}
+                                    checked={allChecked}
+                                    onChange={(e) => checkAllBoxes(e.target.checked)}
                                 />
-                            </label></td>
-                            <td>#{task.id}</td>
-                            <td>{task.title}</td>
-                            <td>{task.description}</td>
-                            <td>
-                                <EditTaskDropdown
-                                    id={task.id}
-                                    isOpen={dropdownOpenOnRow === task.id}
-                                    taskStatus={task.status}
-                                    setDropdownOpenOnRow={setDropdownOpenOnRow}
-                                    fetchAllTasks={fetchAllTasks}
-                                />
-                            </td>
-                            <td>{formatDate(task.dueDate)}</td>
+                            </label></th>
+                            <th>ID</th>
+                            <th>TITLE</th>
+                            <th>DESCRIPTION</th>
+                            <th>STATUS</th>
+                            <th>DUE DATE</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {filteredTasks.map((task: Task) => (
+                            <tr key={task.id}>
+                                <td><label className="checkbox">
+                                    <input type="checkbox"
+                                        value={task.id}
+                                        checked={checked.includes(task.id)}
+                                        onChange={(e) => checkboxAddsToDeleteList(Number(e.target.value))}
+                                    />
+                                </label></td>
+                                <td>#{task.id}</td>
+                                <td>{task.title}</td>
+                                <td>{task.description}</td>
+                                <td>
+                                    <EditTaskDropdown
+                                        id={task.id}
+                                        isOpen={dropdownOpenOnRow === task.id}
+                                        taskStatus={task.status}
+                                        setDropdownOpenOnRow={setDropdownOpenOnRow}
+                                        fetchAllTasks={fetchAllTasks}
+                                    />
+                                </td>
+                                <td>{formatDate(task.dueDate)}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </main>
     );
 }   

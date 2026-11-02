@@ -31,7 +31,6 @@ const statusStyles: Record<string, string> = {
 };
 
     const buttonStyle = "button is-rounded is-fullwidth is-dark is-outlined " + statusStyles[taskStatus];
-    console.log(taskStatus);
 
     const editTaskStatus = async (newStatus: string) => {
         try {

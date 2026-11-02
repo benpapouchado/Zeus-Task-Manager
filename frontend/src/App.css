@@ -101,6 +101,22 @@ body,
   position: relative;
   z-index: 1;
 }
+.rounded-table {
+    border-radius: 12px;
+    border: 1px solid #dbdbdb;
+}
+
+.rounded-table .table {
+    margin-bottom: 0;
+    border-radius: 12px;
+}
+
+.rounded-table .table thead th {
+    background-color: #fff4d9 !important;
+    color: #5b5959 !important;
+    font-weight: 600;
+    border-color: #e0dfdd !important;
+}
 
 .title {
   font-size: 1.5rem;
@@ -177,11 +193,4 @@ body,
   cursor: pointer;
   color: #243047;
   background-color: #f0f4ff;
-}
-
-.status-button {
-    width: 10vw;
-    max-width: 10vw;
-    min-width: 10vw;
-    white-space: nowrap;
 }
