@@ -17,15 +17,15 @@ public class Validation {
             throw new IllegalArgumentException("Title cannot be null or empty");
         }
 
-        if (title.length() > 50) {
+        if (title.length() > 20) {
             throw new IllegalArgumentException("Title cannot exceed 50 characters");
         }
         return true;
     }
 
     public static boolean isValidDescription(String description) {
-        if (description.length() > 1000) {
-            throw new IllegalArgumentException("Description cannot exceed 1000 characters");
+        if (description.length() > 200) {
+            throw new IllegalArgumentException("Description cannot exceed 200 characters");
         }
         return true;
     }
@@ -48,8 +48,11 @@ public class Validation {
         return isValidTitle(task.getTitle()) &&
                 isValidDescription(task.getDescription()) &&
                 isValidStatus(task.getStatus()) &&
-                isValidDueDate(task.getDueDate()) &&
-                isFutureDate(task.getDueDate());
+                isValidDueDate(task.getDueDate());
+    }
+
+        public static boolean isValidCreateTask(Task task) {
+        return isValidTask(task) && isFutureDate(task.getDueDate());
     }
 
     public static boolean isValidId(Long id) {

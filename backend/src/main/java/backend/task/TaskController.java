@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -73,7 +72,7 @@ public class TaskController {
     public ResponseEntity<Task> createTask(
             @Valid @RequestBody CreateTaskRequest request) {
 
-        if (Validation.isValidTask(new Task(
+        if (Validation.isValidCreateTask(new Task(
                 request.title().trim(),
                 request.description().trim(),
                 request.status().trim(),
