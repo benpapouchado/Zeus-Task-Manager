@@ -18,10 +18,10 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", length = 50, nullable = false)
+    @Column(name = "title", length = 20, nullable = false)
     private String title;
 
-    @Column(name = "description", length = 1000, nullable = true)
+    @Column(name = "description", length = 200, nullable = true)
     private String description;
 
     @Column(name = "status", length = 50, nullable = false)
