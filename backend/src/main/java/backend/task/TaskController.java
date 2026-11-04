@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import backend.validation.Validation;
 
@@ -60,7 +61,11 @@ public class TaskController {
     @GetMapping("/retrieve/{id}")
     public ResponseEntity<Task> getTask(@PathVariable Long id) {
         Validation.isValidId(id);
-        repository.existsById(id);
+
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Task with ID " + id + " does not exist");
+        }
 
         return repository.findById(id)
                 .map(ResponseEntity::ok)
@@ -88,21 +93,31 @@ public class TaskController {
     @PatchMapping("/update/{id}")
     public ResponseEntity<Void> updateTaskStatusById(@PathVariable Long id, @RequestBody Task entity) {
         Validation.isValidId(id);
-        repository.existsById(id);
+
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Task with ID " + id + " does not exist");
+        }
+
         repository.updateTaskById(id, entity.getStatus());
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("delete")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deleteMultipleTasks(@RequestParam List<Long> ids) {
+
         for (Long id : ids) {
             Validation.isValidId(id);
-            repository.existsById(id);
+
+            if (!repository.existsById(id)) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Task with ID " + id + " does not exist");
+            }
         }
 
-        repository.deleteRows(ids);
+        repository.deleteAllById(ids);
+
         return ResponseEntity.noContent().build();
     }
 }
