@@ -1,7 +1,9 @@
-package backend.task;
+package backend.validation;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import backend.task.Task;
 
 public class Validation {
 
@@ -17,15 +19,15 @@ public class Validation {
             throw new IllegalArgumentException("Title cannot be null or empty");
         }
 
-        if (title.length() > 20) {
+        if (title.length() > 50) {
             throw new IllegalArgumentException("Title cannot exceed 50 characters");
         }
         return true;
     }
 
     public static boolean isValidDescription(String description) {
-        if (description.length() > 200) {
-            throw new IllegalArgumentException("Description cannot exceed 200 characters");
+        if (description.length() > 1000) {
+            throw new IllegalArgumentException("Description cannot exceed 1000 characters");
         }
         return true;
     }
@@ -45,14 +47,11 @@ public class Validation {
     }
 
     public static boolean isValidTask(Task task) {
-        return isValidTitle(task.getTitle()) &&
+        return isValidId(task.getId()) &&
+                isValidTitle(task.getTitle()) &&
                 isValidDescription(task.getDescription()) &&
                 isValidStatus(task.getStatus()) &&
                 isValidDueDate(task.getDueDate());
-    }
-
-        public static boolean isValidCreateTask(Task task) {
-        return isValidTask(task) && isFutureDate(task.getDueDate());
     }
 
     public static boolean isValidId(Long id) {
