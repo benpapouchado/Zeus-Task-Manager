@@ -61,38 +61,24 @@ export default function Tasks() {
         </div>
 
     const deleteTaskButton = (label: string, rows?: string) => {
-        if (checked.length === 0) {
-            return (
-                <div className="level-item">
-                    <button className="button is-fullwidth is-disabled is-rounded"
-                        style={{
-                            color: "white",
-                            backgroundColor: "#bb5e5e",
-                        }}>
-                        <span className="icon mr-1">
-                            <i className="fas fa-trash"></i>
-                        </span>
-                        {label + rows}
-                    </button>
-                </div>
-            );
-        } else {
-            return (
-                <div className="level-item">
-                    <button className="button is-fullwidth is-responsive is-rounded"
-                        style={{
-                            color: "white",
-                            backgroundColor: "#7e1212",
-                        }}
-                        onClick={() => setSelectedTaskButton(label)}>
-                        <span className="icon mr-1">
-                            <i className="fas fa-trash"></i>
-                        </span>
-                        {label + rows}
-                    </button>
-                </div>
-            );
-        }
+
+        return (
+            <div className="level-item">
+                <button className="button is-fullwidth is-responsive is-rounded"
+                    style={{
+                        color: "white",
+                        backgroundColor: "#7e1212",
+                    }}
+                    disabled={checked.length === 0}
+                    onClick={() => setSelectedTaskButton(label)}>
+                    <span className="icon mr-1">
+                        <i className="fas fa-trash"></i>
+                    </span>
+                    {label + rows}
+                </button>
+            </div>
+        );
+
     }
 
     const filterButton = (label: string) =>
