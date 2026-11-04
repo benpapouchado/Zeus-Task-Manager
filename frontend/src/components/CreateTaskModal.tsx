@@ -2,16 +2,23 @@ import "bulma/css/bulma.min.css";
 import "../App.css";
 import { useState } from 'react';
 import { isValidTask, isValidTitle, isValidDescription, isValidStatus, isValidDueDate } from "../validate/Validation";
+import type { Task } from "../pages/Tasks";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+type CreateTaskModalProps = {
+    setSelectedTaskButton: (value: string) => void;
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
+    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+};
+
 export function CreateTaskModal({
     setSelectedTaskButton,
-    fetchAllTasks,
-}: {
-    setSelectedTaskButton: (value: string) => void;
-    fetchAllTasks: () => void;
-}) {
+    setError,
+    setSuccess,
+    setTasks
+}: CreateTaskModalProps) {
 
     const statuses = {
         todo: "Todo",
@@ -71,12 +78,15 @@ export function CreateTaskModal({
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            if (response.ok) {
-                fetchAllTasks();
-                setSelectedTaskButton("");
-            }
+            const createdTask: Task = await response.json();
+            setTasks((prevTasks) => [...prevTasks, createdTask]);
+            setSelectedTaskButton("");
+            setSuccess("0");
+            setError(null);
 
         } catch (error) {
+            setError("0");
+            setSuccess(null);
             console.error('Error fetching tasks:', error);
         }
     };

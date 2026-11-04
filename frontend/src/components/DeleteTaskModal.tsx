@@ -1,33 +1,36 @@
 
 const API_URL = import.meta.env.VITE_API_URL;
+import type { Task } from '../pages/Tasks';
 
-export function DeleteTaskModal(ids: number[], {
-    setSelectedTaskButton,
-    fetchAllTasks,
-}: {
+type DeleteTaskModalProps = {
+    ids: number[];
     setSelectedTaskButton: (value: string) => void;
-    fetchAllTasks: () => void;
-}) {
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
+    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+};
 
+export function DeleteTaskModal({ ids, setSelectedTaskButton, setError, setSuccess, setTasks }: DeleteTaskModalProps) {
 
     const deleteTasks = async () => {
         try {
             const response = await fetch(`${API_URL}/api/tasks/delete?ids=${ids.join(",")}`, {
                 method: "DELETE",
-
             });
 
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            if (response.ok) {
-                fetchAllTasks();
-                setSelectedTaskButton("");
-            }
+            setTasks((prevTasks) => prevTasks.filter((task) => !ids.includes(task.id)));
+            setSuccess("1");
+            setSelectedTaskButton("");
+            setError(null);
 
         } catch (error) {
             console.error('Error fetching tasks:', error);
+            setError("1");
+            setSuccess(null);
         }
     };
 

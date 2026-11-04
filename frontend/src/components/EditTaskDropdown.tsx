@@ -1,3 +1,5 @@
+import type { Task } from "../pages/Tasks";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 type Dropdown = {
@@ -5,7 +7,9 @@ type Dropdown = {
     isOpen: boolean;
     taskStatus: string;
     setDropdownOpenOnRow: (value: number | null) => void;
-    fetchAllTasks: () => Promise<void>;
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+    setError: React.Dispatch<React.SetStateAction<string | null>>;
+    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export function EditTaskDropdown({
@@ -13,7 +17,9 @@ export function EditTaskDropdown({
     isOpen,
     taskStatus,
     setDropdownOpenOnRow,
-    fetchAllTasks,
+    setTasks,
+    setError,
+    setSuccess
 }: Dropdown) {
 
     const statuses = [
@@ -44,14 +50,20 @@ export function EditTaskDropdown({
                 }
             );
 
+            setTasks((prevTasks) => prevTasks.map((task) =>
+                task.id === id ? { ...task, status: newStatus } : task));
+            setSuccess("2");
+            setError(null);
+
+
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            await fetchAllTasks();
-
         } catch (error) {
             console.error("Error updating task:", error);
+            setError("2");
+            setSuccess(null);
         } finally {
             setDropdownOpenOnRow(null);
         }
