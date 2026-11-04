@@ -47,6 +47,8 @@ export default function Tasks() {
 
     const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
 
+    const [expandRow, setExpandRow] = useState<number[]>([]);
+
     const successText = [
         "Task created successfully",
         "Task(s) deleted successfully",
@@ -201,6 +203,33 @@ export default function Tasks() {
         return dueDate < now && task.status !== statuses.done;
     };
 
+    const expandedDescription = (task: Task) => {
+        const isExpanded = expandRow.includes(task.id);
+        const description = isExpanded ? task.description : task.description.slice(0, 20) + (task.description.length > 20 ? "..." : "");
+        return description;
+    }
+
+    const toggleExpandRow = (taskId: number) => {
+        if (expandRow.includes(taskId)) {
+            setExpandRow(expandRow.filter(id => id !== taskId));
+        } else {
+            setExpandRow([...expandRow, taskId]);
+        }
+    }
+
+    const expandRowIcon = (taskId: number, description: string) => {
+        const isExpanded = expandRow.includes(taskId);
+        const buttonLabel = isExpanded ? "fas fa-angle-up" : "fas fa-angle-down";
+
+        return (
+            description.length > 20 && (
+                <span className="icon mr-1">
+                    <i className={buttonLabel}></i>
+                </span>
+            )
+        );
+    }
+
     return (
         <main >
             <section>
@@ -273,7 +302,7 @@ export default function Tasks() {
 
 
             <div className="rounded-table">
-                <table className="table is-hoverable is-fullwidth rounded-table task-table">
+                <table className="table is-hoverable is-fullwidth rounded-table task-table is-vcentered">
                     <thead>
                         <tr>
                             <th><label className="checkbox">
@@ -312,8 +341,12 @@ export default function Tasks() {
                                         setSuccess={setSuccess}
                                     />
                                 </td>
-                                <td>{task.description}</td>
-
+                                <td>
+                                    <span onClick={() => toggleExpandRow(task.id)} style={{ cursor: 'pointer' }}>
+                                        {expandRowIcon(task.id, task.description)}
+                                        {expandedDescription(task)}
+                                    </span>
+                                </td>
                                 <td>
                                     <div>{formatDate(task.dueDate)}</div>
                                     <div> {overdue(task) && <span className="tag is-danger">Overdue</span>}</div>
