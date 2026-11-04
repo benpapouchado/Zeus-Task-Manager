@@ -1,6 +1,7 @@
 import "bulma/css/bulma.min.css";
 import "../App.css";
 import { useState } from 'react';
+import { isValidTask, isValidTitle, isValidDescription, isValidStatus, isValidDueDate } from "../validate/Validation";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -11,8 +12,6 @@ export function CreateTaskModal({
     setSelectedTaskButton: (value: string) => void;
     fetchAllTasks: () => void;
 }) {
-
-
 
     const statuses = {
         todo: "Todo",
@@ -27,6 +26,13 @@ export function CreateTaskModal({
 
     const [selectedStatusButton, setSelectedStatusButton] = useState<string | null>(statuses.todo);
 
+    const [errorForm, setErrorForm] = useState({
+        title: "",
+        description: "",
+        status: "",
+        dueDate: "",
+    })
+
     const selectStatusButton = (label: string) =>
         <button
             key={label}
@@ -36,11 +42,17 @@ export function CreateTaskModal({
                 backgroundColor: label === selectedStatusButton ? "#7e1212" : "white",
             }}
             onClick={() => {
+                if (isValidStatus(label) === true) {
                 setSelectedStatusButton(label)
                 setStatus(label)
+                setErrorForm({ ...errorForm, status: "" });
+                } else {
+                    setErrorForm({ ...errorForm, status: isValidStatus(label) as string });
+                }
             }}>
             {label}
         </button>
+        {errorForm.status && <p className="help is-danger">{errorForm.status}</p>}
 
     const createNewTask = async () => {
         try {
@@ -90,9 +102,18 @@ export function CreateTaskModal({
                                 type="text"
                                 placeholder="What needs doing?"
                                 value={title}
-                                onChange={(e) => setTitle(e.target.value)} />
+                                onChange={(e) => {
+                                    const validationResult = isValidTitle(e.target.value);
+                                    if (validationResult === true) {
+                                        setTitle(e.target.value)
+                                        setErrorForm({ ...errorForm, title: "" });
+                                    } else {
+                                        setErrorForm({ ...errorForm, title: validationResult as string });
+                                    }
+                                }} />
                         </div>
                     </div>
+                    {errorForm.title && <p className="help is-danger">{errorForm.title}</p>}
 
                     <div className="field">
                         <label className="label">Description</label>
@@ -100,17 +121,25 @@ export function CreateTaskModal({
                             <textarea className="textarea"
                                 placeholder="Optional details"
                                 value={description}
-                                onChange={(e) => setDescription(e.target.value)}>
+                                onChange={(e) => {
+                                    const validationResult = isValidDescription(e.target.value);
+                                    if (validationResult === true) {
+                                        setErrorForm({ ...errorForm, description: "" });
+                                        setDescription(e.target.value);
+                                    } else {
+                                        setErrorForm({ ...errorForm, description: validationResult as string });
+                                    }
+                                }}>
                             </textarea>
                         </div>
                     </div>
+                    {errorForm.description && <p className="help is-danger">{errorForm.description}</p>}
 
                     <div>
                         <label className="label">Status</label>
                     </div>
                     <div className="column">
                         <div className="columns is-variable is-1">
-
                             <div className="column">
                                 {selectStatusButton(statuses.todo)}
                             </div>
@@ -122,6 +151,7 @@ export function CreateTaskModal({
                             </div>
                         </div>
                     </div>
+                    {errorForm.status && <p className="help is-danger">{errorForm.status}</p>}
 
                     <div className="field">
                         <label className="label">Due Date</label>
@@ -131,22 +161,35 @@ export function CreateTaskModal({
                                 aria-label="Due date time"
                                 type="datetime-local"
                                 value={dueDate}
-                                onChange={(e) => setDueDate(e.target.value)}
+                                onChange={(e) => {
+                                    if (isValidDueDate(e.target.value) === true) {
+                                        setDueDate(e.target.value)
+                                        setErrorForm({ ...errorForm, dueDate: "" });
+                                    } else {
+                                        setErrorForm({ ...errorForm, dueDate: isValidDueDate(e.target.value) as string });
+                                    }
+                                }}
                                 onClick={(e) => {
                                     try {
                                         e.currentTarget.showPicker
                                     }
                                     catch {
-                                        console.error("Wont work");
+                                        setErrorForm({ ...errorForm, dueDate: "Invalid date format" });
                                     }
                                 }} />
                         </div>
                     </div>
+                    {errorForm.dueDate && <p className="help is-danger">{errorForm.dueDate}</p>}
 
                     <div className="my-4">
                         <button
                             className="button is-rounded"
-                            onClick={createNewTask}
+                            onClick={ () =>
+{                                if(isValidTask({ title, description, status, dueDate }) === true) {
+                                    createNewTask();
+                                }}
+                            }
+                            disabled={errorForm.title !== "" || errorForm.description !== "" || errorForm.status !== "" || errorForm.dueDate !== ""}
                             style={{
                                 backgroundColor: "#7e1212",
                                 color: "white",
