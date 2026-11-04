@@ -13,15 +13,15 @@ export function isNonEmptyTitle(title : string): string | boolean {
 }
 
 export function isValidTitle(title: string): string | boolean {
-    if (title.length > 20) {
-        return "Title cannot exceed 20 characters";
+    if (title.length > 50) {
+        return "Title cannot exceed 50 characters";
     }
     return true;
 }
 
 export function isValidDescription(description: string): string | boolean {
-    if (description.length > 200) {
-        return "Description cannot exceed 200 characters";
+    if (description.length > 1000) {
+        return "Description cannot exceed 1000 characters";
     }
     return true;
 }
