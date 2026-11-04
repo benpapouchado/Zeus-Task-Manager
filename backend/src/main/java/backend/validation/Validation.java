@@ -7,12 +7,13 @@ import backend.task.Task;
 
 public class Validation {
 
-    public static boolean isValidStatus(String status) {
-        if (status.equals("Todo") || status.equals("In Progress") || status.equals("Done")) {
-            return true;
-        }
-        throw new IllegalArgumentException("Invalid status: " + status);
+public static boolean isValidStatus(String status) {
+    if ("Todo".equals(status) || "In Progress".equals(status) || "Done".equals(status)) {
+        return true;
     }
+
+    throw new IllegalArgumentException("Invalid status: " + status);
+}
 
     public static boolean isValidTitle(String title) {
         if (title == null || title.isEmpty()) {
@@ -29,7 +30,7 @@ public class Validation {
         if (description.length() > 200) {
             throw new IllegalArgumentException("Description cannot exceed 200 characters");
         }
-        return true;
+        return description.isEmpty() || description.length() <= 200;
     }
 
     public static boolean isValidDueDate(LocalDateTime dueDate) {
@@ -55,7 +56,7 @@ public class Validation {
     }
 
     public static boolean isValidId(Long id) {
-        if (id != null && id > 0) {
+        if (id > 0) {
             return true;
         }
         throw new IllegalArgumentException("Invalid ID: " + id);

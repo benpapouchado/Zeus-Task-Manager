@@ -33,8 +33,16 @@ public class Task {
     protected Task() {
     }
 
+    public Task(Long id, String title, String description, String status, LocalDateTime dueDate) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.dueDate = dueDate;
+    }
+
     public Task(String title, String description, String status, LocalDateTime dueDate) {
-        this.title = title; 
+        this.title = title;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
@@ -43,7 +51,6 @@ public class Task {
     public Task(String status) {
         this.status = status;
     }
-
 
     public Long getId() {
         return id;
