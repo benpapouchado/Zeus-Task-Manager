@@ -195,6 +195,12 @@ export default function Tasks() {
 
     const filteredTasksWithSearch = searchResult ? [searchResult] : filteredTasks;
 
+    const overdue = (task: Task) => {
+        const dueDate = new Date(task.dueDate);
+        const now = new Date();
+        return dueDate < now && task.status !== statuses.done;
+    };
+
     return (
         <main >
             <section>
@@ -308,7 +314,10 @@ export default function Tasks() {
                                 </td>
                                 <td>{task.description}</td>
 
-                                <td>{formatDate(task.dueDate)}</td>
+                                <td>
+                                    <div>{formatDate(task.dueDate)}</div>
+                                    <div> {overdue(task) && <span className="tag is-danger">Overdue</span>}</div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
