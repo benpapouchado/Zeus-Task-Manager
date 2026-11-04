@@ -43,16 +43,16 @@ export function CreateTaskModal({
             }}
             onClick={() => {
                 if (isValidStatus(label) === true) {
-                setSelectedStatusButton(label)
-                setStatus(label)
-                setErrorForm({ ...errorForm, status: "" });
+                    setSelectedStatusButton(label)
+                    setStatus(label)
+                    setErrorForm({ ...errorForm, status: "" });
                 } else {
                     setErrorForm({ ...errorForm, status: isValidStatus(label) as string });
                 }
             }}>
             {label}
         </button>
-        {errorForm.status && <p className="help is-danger">{errorForm.status}</p>}
+    { errorForm.status && <p className="help is-danger">{errorForm.status}</p> }
 
     const createNewTask = async () => {
         try {
@@ -184,10 +184,11 @@ export function CreateTaskModal({
                     <div className="my-4">
                         <button
                             className="button is-rounded"
-                            onClick={ () =>
-{                                if(isValidTask({ title, description, status, dueDate }) === true) {
+                            onClick={() => {
+                                if (isValidTask({ title, description, status, dueDate }) === true) {
                                     createNewTask();
-                                }}
+                                }
+                            }
                             }
                             disabled={errorForm.title !== "" || errorForm.description !== "" || errorForm.status !== "" || errorForm.dueDate !== ""}
                             style={{
