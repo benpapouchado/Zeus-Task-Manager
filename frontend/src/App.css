@@ -103,19 +103,23 @@ body,
 }
 
 .rounded-table {
-    border: 1px solid #dbdbdb;
-    border-radius: 12px;
+  border: 1px solid #dbdbdb;
+  border-radius: 12px;
 }
 
 .rounded-table .task-table {
-    margin-bottom: 0;
-    border: none;
-    border-radius: 0;
+  margin-bottom: 0;
+  border: none;
+  border-radius: 0;
 }
 
 .rounded-table .task-table th,
 .rounded-table .task-table td {
-    border-width: 0 0 1px;
+  border-width: 0 0 1px;
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+  vertical-align: middle;
 }
 
 .title {
