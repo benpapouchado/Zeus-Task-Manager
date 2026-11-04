@@ -26,8 +26,8 @@ public class Validation {
     }
 
     public static boolean isValidDescription(String description) {
-        if (description.length() > 1000) {
-            throw new IllegalArgumentException("Description cannot exceed 1000 characters");
+        if (description.length() > 200) {
+            throw new IllegalArgumentException("Description cannot exceed 200 characters");
         }
         return true;
     }

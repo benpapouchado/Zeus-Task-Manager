@@ -20,8 +20,8 @@ export function isValidTitle(title: string): string | boolean {
 }
 
 export function isValidDescription(description: string): string | boolean {
-    if (description.length > 1000) {
-        return "Description cannot exceed 1000 characters";
+    if (description.length > 200) {
+        return "Description cannot exceed 200 characters";
     }
     return true;
 }
