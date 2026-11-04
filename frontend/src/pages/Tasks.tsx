@@ -7,7 +7,7 @@ import { EditTaskDropdown } from '../components/EditTaskDropdown';
 import "bulma/css/bulma.min.css";
 import "../App.css";
 
-type Task = {
+export type Task = {
     id: number;
     title: string;
     description: string;
@@ -38,12 +38,61 @@ export default function Tasks() {
 
     const [searchId, setSearchId] = useState<number | null>(null);
     const [searchResult, setSearchResult] = useState<Task | null>(null);
-    const [searchError, setSearchError] = useState<boolean>(false);
 
     const [allChecked, setAllChecked] = useState(false);
     const [checked, setChecked] = useState<number[]>([]);
 
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+
     const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
+
+    const successText = [
+        "Task created successfully",
+        "Task(s) deleted successfully",
+        "Task updated successfully"];
+
+    const successMessage = (index: number) => {
+        return (
+            <div className="notification is-success is-light ">
+                <p className="has-text-success is-large">{successText[index]}</p>
+            </div>
+        )
+    }
+
+    const errorText = [
+        "Error creating task",
+        "Error deleting task(s)",
+        "Error updating task",
+        "Error fetching tasks",
+        "Error retrieving task"];
+
+    const errorMessage = (index: number) => (
+        <div className="notification is-danger is-light ">
+            <p className="has-text-danger is-large">{errorText[index]}</p>
+        </div>
+    )
+
+    useEffect(() => {
+        if (!success) return;
+
+        const timeout = setTimeout(() => {
+            setSuccess(null);
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, [success]);
+
+    useEffect(() => {
+        if (!error) return;
+
+        const timeout = setTimeout(() => {
+            setError(null);
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, [error]);
+
 
     const taskButton = (label: string) =>
         <div className="level-item">
@@ -113,6 +162,7 @@ export default function Tasks() {
 
         } catch (error) {
             console.error('Error fetching tasks:', error);
+            setError("3");
         }
     };
 
@@ -145,28 +195,23 @@ export default function Tasks() {
 
     const filteredTasksWithSearch = searchResult ? [searchResult] : filteredTasks;
 
-    useEffect(() => {
-        if (!searchError) return;
-
-        const timeout = setTimeout(() => {
-            setSearchError(false);
-        }, 3000);
-
-        return () => clearTimeout(timeout);
-    }, [searchError]);
-
     return (
         <main >
             <section>
                 {selectedTaskButton === taskActions.newTask && <CreateTaskModal
                     setSelectedTaskButton={setSelectedTaskButton}
-                    fetchAllTasks={fetchAllTasks} />}
+                    setError={setError}
+                    setSuccess={setSuccess}
+                    setTasks={setTasks} />}
             </section>
 
             <section>
-                {selectedTaskButton === taskActions.delete && DeleteTaskModal(checked, {
+                {selectedTaskButton === taskActions.delete && DeleteTaskModal({
+                    ids: checked,
                     setSelectedTaskButton,
-                    fetchAllTasks,
+                    setError: setError,
+                    setSuccess: setSuccess,
+                    setTasks
                 })}
             </section>
 
@@ -196,7 +241,7 @@ export default function Tasks() {
                     setSearchId={setSearchId}
                     setSelectedFilterButton={setSelectedFilterButton}
                     setSearchResult={setSearchResult}
-                    setSearchError={setSearchError}
+                    setError={setError}
                 />
 
                 <div className="column">
@@ -216,12 +261,11 @@ export default function Tasks() {
                     </div>
                 </div>
             </div>
-            {searchError && (
-                <div className="notification is-danger is-light ">
-                    <p className="has-text-danger is-large">Task not found</p>
-                </div>
-            )}
-            {/* {clearErrorMessage} */}
+
+            {success !== null && (successMessage(parseInt(success)))}
+            {error !== null && (errorMessage(parseInt(error)))}
+
+
             <div className="rounded-table">
                 <table className="table is-hoverable is-fullwidth rounded-table task-table">
                     <thead>
@@ -257,7 +301,9 @@ export default function Tasks() {
                                         isOpen={dropdownOpenOnRow === task.id}
                                         taskStatus={task.status}
                                         setDropdownOpenOnRow={setDropdownOpenOnRow}
-                                        fetchAllTasks={fetchAllTasks}
+                                        setTasks={setTasks}
+                                        setError={setError}
+                                        setSuccess={setSuccess}
                                     />
                                 </td>
                                 <td>{task.description}</td>
