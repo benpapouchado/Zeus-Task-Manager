@@ -1,56 +1,177 @@
-# Zeus Task Manager
+# ⚡ Zeus Task Manager
 
- Welcome to Mount Olympus.
+*Welcome to Mount Olympus.*
 
-Task Manager web app where users can create, delete, view and update their tasks. Tasks include a title, a status, an optional description and a due date.
+A task management web application where users can create, view, update and delete tasks.
 
-The backend is written in Springboot. I used the Java version 25 openJDK for this.
+Each task contains:
+- A title
+- A status
+- An optional description
+- A due date
 
-The frontend is written in React Vite. I used Typescript 
+## Table of Contents
+1. [Tech Stack](#tech-stack)
+2. [Prerequisites](#prerequisites)
+3. [Database Configuration](#database-configuration)
+4. [Get Zeus Task Manager up and running](#get-zeus-task-manager-up-and-running)
+5. [Installation](#installation)
+6. [Usage](#usage)
+7. [API Endpoints](#api-endpoints)
+8. [Testing](#testing)
+9. [Future Improvements](#future-improvements)
 
-The database is Postgres
+## Tech Stack
 
-## Installation
-1. Clone the repository
-2. Start a terminal and `cd backend`
-3. Start the backend server with `mvn spring-boot:run`
-4. Start a new terminal and `cd frontend`
-5. Run `npm install`
-6. Start the frontend server with `npm run dev`
+| Layer | Technology |
+| --- | --- | 
+| Frontend | React, Vite, TypeScript |
+| Backend | Java 25 (OpenJDK), Spring Boot |
+| Database | PostgreSQL |
+| Styling | Bulma CSS |
 
-alternatively
-Run the ./startup.sh
+## Prerequisites
+
+Before running the application, ensure you have installed:
+
+- Java 25 (OpenJDK)
+- Maven (or use the included Maven wrapper)
+- Node.js and npm
+- PostgreSQL
+
+## Database Configuration
+
+This application uses PostgreSQL.
+
+1. Install and start PostgreSQL with taskmanager_user `psql postgres` or `psql -h localhost -p 5432 -U postgres -d postgres -W`
+2. Create a database named `taskmanager_db`.
+3. Configure the following environment variables:
+
+| Variable | Description |
+|---|---|
+| DB_URL | PostgreSQL database connection URL |
+| DB_USERNAME | Your PostgreSQL username |
+| DB_PASSWORD | Your PostgreSQL password |
+
+```bash
+export DB_URL=jdbc:postgresql://localhost:5432/taskmanager_db
+export DB_USERNAME=postgres
+export DB_PASSWORD=your_password
+```
+
+## Get Zeus Task Manager up and running
+
+Ensure PostgreSQL is running and the database connection details are configured in the backend application settings.
+
+### Installation
+
+**1. Start the backend**
+
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+**2. Start the frontend**
+
+Open a new terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## Usage
-Visit `http://localhost:5173/tasks` in your browser to use the application.
 
-## Endpoints
+Once the frontend and backend servers are running, visit:
 
-GET /api/tasks/retrieve
-retrieves all the tasks that have been created and are displayed in a listed table
+[http://localhost:5173/tasks](http://localhost:5173/tasks)
 
-GET /api/tasks/retreive/{id}
-search function to retrieve a single task by its Id number
+The application allows users to create, view, search, update and delete tasks.
 
-POST
-/api/tasks/create
-creates a new task and enters into database. Takes a body containing title, optionsl description, status and due date
+Example:
 
-PATCH
-/api/tasks/update/{id}
-updates the status of a task of the given options.
+## API Endpoints
 
-DELETE
-/api/tasks/delete?ids=id1,id2,id3
-Deletes single or multiple rows of tasks
+The backend exposes the following REST API endpoints:
 
-### Test endpoints
- Run `curl -X -i "http://localhost:8080/api/tasks/retrieve"` to manually test the backend server is running display all the tasks
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/api/tasks/retrieve` | Retrieves all tasks |
+| GET | `/api/tasks/retrieve/{id}` | Retrieves a task by its ID |
+| POST | `/api/tasks/create` | Creates a new task |
+| PATCH | `/api/tasks/update/{id}` | Updates a task's status |
+| DELETE | `/api/tasks/delete?ids=id1,id2,id3` | Deletes one or multiple tasks |
 
- ## Run tests
+### Retrieve Tasks
 
-## Improvements
-1. Containerise the frontend, backend and database,
-2. Fix select bug
-3. Allow archiving of tasks and undo of deleting
-4. Introduce idempotency to the `api/tasks/create` endpoint as the HTTP method, POST, is not naturally idempotent.
+`GET /api/tasks/retrieve`
+
+Retrieves all the tasks in the database
+
+### Retrieve Task
+
+`GET /api/tasks/retrieve/{id}`
+
+Retrieves a single task by its specified ID.
+
+### Create Task
+
+`POST /api/tasks/create`
+
+Creates a new task and saves it to the database.
+
+The request body contains:
+- `title` – Task title
+- `description` – Optional task description
+- `status` – Task status
+- `dueDate` – Task due date
+
+### Update Task
+
+`PATCH /api/tasks/update/{id}`
+
+Updates the status of the task with the specified ID.
+
+The request body contains:
+- `status` – Updated Task status
+
+### Delete Tasks
+
+`DELETE /api/tasks/delete?ids=id1,id2,id3`
+
+Deletes one or multiple tasks using their IDs.
+
+## Testing
+
+### Manually Testing the Backend
+
+With the backend server running, use curl to check that the API is responding:
+
+```bash
+curl -i http://localhost:8080/api/tasks/hello
+```
+
+### Running Automated Tests
+
+Navigate to the backend directory:
+
+```bash
+cd backend
+```
+
+Run all backend tests:
+
+```bash
+./mvnw test
+```
+
+## Future Improvements
+
+- Containerise the frontend, backend and database using Docker.
+- Fix the select-all checkbox bug when individually selecting every task.
+- Introduce task archiving and the ability to undo deletions.
+- Implement idempotency for the task creation endpoint to help prevent duplicate tasks from repeated tries of the same request.
+- Complete the Dashboard, Calendar and Settings pages.
+- Add frontend unit and component tests.
