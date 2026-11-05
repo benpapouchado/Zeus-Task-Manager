@@ -43,7 +43,7 @@ Before running the application, ensure you have installed:
 
 This application uses PostgreSQL.
 
-1. Install and start PostgreSQL with taskmanager_user `psql postgres` or `psql -h localhost -p 5432 -U postgres -d postgres -W`
+1. Install and start PostgreSQL with taskmanager_user.
 2. Create a database named `taskmanager_db`.
 3. Configure the following environment variables:
 
@@ -170,8 +170,8 @@ Run all backend tests:
 ## Future Improvements
 
 - Containerise the frontend, backend and database using Docker.
-- Fix the select-all checkbox bug when individually selecting every task.
-- Introduce task archiving and the ability to undo deletions.
+- Fix the delete button staying active bug after deleting all tasks
+- Introduce task archiving and the ability to send tasks to deletion bin, which are fully deleted when the bin is emptied.
 - Implement idempotency for the task creation endpoint to help prevent duplicate tasks from repeated tries of the same request.
 - Complete the Dashboard, Calendar and Settings pages.
 - Add frontend unit and component tests.
