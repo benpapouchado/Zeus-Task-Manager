@@ -61,19 +61,11 @@ CREATE DATABASE taskmanager_db;
 
 Configure the following environment variables in application.properties to connect the application to PostgreSQL:
 
-| Variable | Description |
-| --- | --- |
-| `DB_URL` | PostgreSQL database connection URL |
-| `DB_USERNAME` | PostgreSQL username |
-| `DB_PASSWORD` | PostgreSQL password |
-
-Set the environment variables:
-
-```bash
-export DB_URL=jdbc:postgresql://localhost:5432/taskmanager_db
-export DB_USERNAME=taskmanager_user
-export DB_PASSWORD=your_password
-```
+| Variable | Description | Value |
+| --- | --- | --- |
+| `DB_URL` | PostgreSQL database connection URL | `jdbc:postgresql://localhost:5432/taskmanager_db` |
+| `DB_USERNAME` | PostgreSQL username | `taskmanager_db` |
+| `DB_PASSWORD` | PostgreSQL password | `your_password` |
 
 Replace `your_password` with your actual PostgreSQL password.
 
@@ -156,7 +148,7 @@ With the backend server running, use curl to check that the API is responding:
 curl -i http://localhost:8080/api/tasks/hello
 ```
 
-### Running Automated Tests
+### Running Unit Tests
 
 Navigate to the backend directory:
 
