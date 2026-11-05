@@ -41,23 +41,44 @@ Before running the application, ensure you have installed:
 
 ## Database Configuration
 
-This application uses PostgreSQL.
+This application uses **PostgreSQL** as its database.
 
-1. Install and start PostgreSQL with taskmanager_user.
-2. Create a database named `taskmanager_db`.
-3. Configure the following environment variables:
+### 1. Install and Start PostgreSQL
+
+Install PostgreSQL on your system and ensure that the PostgreSQL service is running.
+
+Create or configure a PostgreSQL user named `taskmanager_user` with the necessary database permissions.
+
+### 2. Create the Database
+
+Create a database named `taskmanager_db`:
+
+```sql
+CREATE DATABASE taskmanager_db;
+```
+
+### 3. Configure Environment Variables
+
+Configure the following environment variables in application.properties to connect the application to PostgreSQL:
 
 | Variable | Description |
-|---|---|
-| DB_URL | PostgreSQL database connection URL |
-| DB_USERNAME | Your PostgreSQL username |
-| DB_PASSWORD | Your PostgreSQL password |
+| --- | --- |
+| `DB_URL` | PostgreSQL database connection URL |
+| `DB_USERNAME` | PostgreSQL username |
+| `DB_PASSWORD` | PostgreSQL password |
+
+Set the environment variables:
 
 ```bash
 export DB_URL=jdbc:postgresql://localhost:5432/taskmanager_db
-export DB_USERNAME=postgres
+export DB_USERNAME=taskmanager_user
 export DB_PASSWORD=your_password
 ```
+
+Replace `your_password` with your actual PostgreSQL password.
+
+**Note:** Ensure the configured PostgreSQL user has the necessary permissions to access `taskmanager_db`.
+
 
 ## Get Zeus Task Manager up and running
 
