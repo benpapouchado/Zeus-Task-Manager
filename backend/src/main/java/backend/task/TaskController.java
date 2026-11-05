@@ -40,7 +40,7 @@ public class TaskController {
 
     public record CreateTaskRequest(
             @NotBlank @Size(max = 50) String title,
-            @Size(max = 1000) String description,
+            @Size(max = 200) String description,
             @Size(max = 50) String status,
             LocalDateTime dueDate) {
     }
