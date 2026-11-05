@@ -35,7 +35,7 @@ Each task contains:
 Before running the application, ensure you have installed:
 
 - Java 25 (OpenJDK)
-- Maven (or use the included Maven wrapper)
+- Maven 
 - Node.js and npm
 - PostgreSQL
 
@@ -104,18 +104,6 @@ The backend exposes the following REST API endpoints:
 | PATCH | `/api/tasks/update/{id}` | Updates a task's status |
 | DELETE | `/api/tasks/delete?ids=id1,id2,id3` | Deletes one or multiple tasks |
 
-### Retrieve Tasks
-
-`GET /api/tasks/retrieve`
-
-Retrieves all the tasks in the database
-
-### Retrieve Task
-
-`GET /api/tasks/retrieve/{id}`
-
-Retrieves a single task by its specified ID.
-
 ### Create Task
 
 `POST /api/tasks/create`
@@ -136,12 +124,6 @@ Updates the status of the task with the specified ID.
 
 The request body contains:
 - `status` – Updated Task status
-
-### Delete Tasks
-
-`DELETE /api/tasks/delete?ids=id1,id2,id3`
-
-Deletes one or multiple tasks using their IDs.
 
 ## Testing
 
@@ -170,7 +152,7 @@ Run all backend tests:
 ## Future Improvements
 
 - Containerise the frontend, backend and database using Docker.
-- Fix the delete button staying active bug after deleting all tasks
+- Deleting every task should disable the delete button
 - Introduce task archiving and the ability to send tasks to deletion bin, which are fully deleted when the bin is emptied.
 - Implement idempotency for the task creation endpoint to help prevent duplicate tasks from repeated tries of the same request.
 - Complete the Dashboard, Calendar and Settings pages.
