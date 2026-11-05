@@ -34,7 +34,7 @@ export function DeleteTaskModal({ ids, setSelectedTaskButton, setError, setSucce
         }
     };
 
-    const modalHeader = ids.length > 1 ? "Delete Task" : "Delete Tasks";
+    const modalHeader = ids.length > 1 ? "Delete Tasks" : "Delete Task";
     const modalContent = ids.length > 1 ? "Are you sure you want to delete " + ids.length + " tasks?" :
         "Are you sure you want to delete " + ids.length + " task?";
 

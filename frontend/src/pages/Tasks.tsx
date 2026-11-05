@@ -39,7 +39,6 @@ export default function Tasks() {
     const [searchId, setSearchId] = useState<number | null>(null);
     const [searchResult, setSearchResult] = useState<Task | null>(null);
 
-    const [allChecked, setAllChecked] = useState(false);
     const [checked, setChecked] = useState<number[]>([]);
 
     const [error, setError] = useState<string | null>(null);
@@ -173,13 +172,15 @@ export default function Tasks() {
     }, [searchResult]);
 
     const checkboxAddsToDeleteList = (id: number) => {
-        setChecked(checked.includes(id) ? checked.filter(checkedId => checkedId !== id) : [...checked, id]);
-    }
+        setChecked(prev => prev.includes(id) ? prev.filter(checkedId => checkedId !== id) : [...prev, id]);
+    };
 
     const checkAllBoxes = (allBoxesChecked: boolean) => {
-        setAllChecked(allBoxesChecked);
-        setChecked(allBoxesChecked ? tasks.map((row) => row.id) : []);
-    }
+        setChecked(allBoxesChecked ? tasks.map(row => row.id) : []);
+    };
+
+    const allChecked = tasks.length > 0 &&
+    tasks.every(task => checked.includes(task.id));
 
     const formatDate = (date: string) => {
         return new Date(date).toLocaleString("en-GB", {
@@ -299,7 +300,6 @@ export default function Tasks() {
 
             {success !== null && (successMessage(parseInt(success)))}
             {error !== null && (errorMessage(parseInt(error)))}
-
 
             <div className="rounded-table">
                 <table className="table is-hoverable is-fullwidth rounded-table task-table is-vcentered">
