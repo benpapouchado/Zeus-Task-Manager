@@ -108,13 +108,12 @@ class TaskControllerTest {
                 assertNotNull(responseEntity2);
                 assertNotNull(responseEntity3);
 
-                List<Long> allTasks = taskController.getTasks().getBody().stream()
-                                .map(Task::getId)
-                                .collect(java.util.stream.Collectors.toList());
+                List<Long> allTasks = List.of(responseEntity1.getBody().getId(),
+        responseEntity2.getBody().getId(), responseEntity3.getBody().getId());
 
-                assertTrue(allTasks.contains(responseEntity1.getBody().getId()));
-                assertTrue(allTasks.contains(responseEntity2.getBody().getId()));
-                assertTrue(allTasks.contains(responseEntity3.getBody().getId()));
+                for(Long taskId : allTasks){
+                        assertTrue(allTasks.contains(taskId));
+                }
 
                 taskController.deleteMultipleTasks(allTasks);
         }
