@@ -2,12 +2,9 @@ package backend;
 
 import java.util.List;
 import java.time.LocalDateTime;
-import backend.task.TaskController;
 import backend.task.TaskRepository;
 import backend.task.Task;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
