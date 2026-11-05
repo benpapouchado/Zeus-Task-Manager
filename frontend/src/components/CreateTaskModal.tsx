@@ -209,7 +209,9 @@ export function CreateTaskModal({
                         </button>
                         <button
                             className="button is-rounded"
-                            onClick={() => setSelectedTaskButton("")}>
+                            onClick={() => setSelectedTaskButton("")}
+                            disabled={errorForm.title !== "" || errorForm.description !== ""
+                                || errorForm.status !== "" || errorForm.dueDate !== ""}>
                             Cancel
                         </button>
                     </div>
