@@ -8,9 +8,17 @@ import type { Task } from "../type/Type";
 import "bulma/css/bulma.min.css";
 import "../App.css";
 
-const API_URL = import.meta.env.VITE_API_URL;
+type TaskProps = {
+    tasks : Task[],
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
+    success: string | null,
+    setSuccess: React.Dispatch<React.SetStateAction<string | null>>,
+    error : string | null,
+    setError: React.Dispatch<React.SetStateAction<string | null>>, 
+}
 
-export default function Tasks() {
+export default function Tasks({ tasks, setTasks, success, setSuccess, error, setError }
+    : TaskProps ) {
 
     const taskActions = {
         newTask: "New Task",
@@ -24,8 +32,6 @@ export default function Tasks() {
         done: "Done",
     }
 
-    const [tasks, setTasks] = useState<Task[]>([]);
-
     const [selectedTaskButton, setSelectedTaskButton] = useState<string | null>(null);
     const [selectedFilterButton, setSelectedFilterButton] = useState<string | null>(statuses.all);
 
@@ -33,9 +39,6 @@ export default function Tasks() {
     const [searchResult, setSearchResult] = useState<Task | null>(null);
 
     const [checked, setChecked] = useState<number[]>([]);
-
-    const [error, setError] = useState<string | null>(null);
-    const [success, setSuccess] = useState<string | null>(null);
 
     const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
 
@@ -135,34 +138,6 @@ export default function Tasks() {
             onClick={() => setSelectedFilterButton(label)}>
             {label}
         </button>
-
-    const fetchAllTasks = async () => {
-        try {
-            const response = await fetch(`${API_URL}/api/tasks/retrieve`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }
-            );
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            data.sort((a: Task, b: Task) => a.id - b.id);
-            setTasks(data);
-
-        } catch (error) {
-            console.error('Error fetching tasks:', error);
-            setError("3");
-        }
-    };
-
-    useEffect(() => {
-        fetchAllTasks();
-    }, [searchResult]);
 
     const checkboxAddsToDeleteList = (id: number) => {
         setChecked(prev => prev.includes(id) ? prev.filter(checkedId => checkedId !== id) : [...prev, id]);
