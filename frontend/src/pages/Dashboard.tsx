@@ -31,11 +31,8 @@ export default function Dashboard({ tasks }: DashboardProps) {
             return (new Date(row.dueDate) < now)
         });
 
-
-    console.log(overdue)
-
     const icon = (icon: string, label: string, count: number) => (
-        <div className="box is-flex-grow-1 has-text-left" >
+        <div className="box column is-flex-grow-1 has-text-left is-one-fifth mg-medium" >
             <div >
                 <span className="icon is-medium">
                     <span className="mr-2">
@@ -50,6 +47,14 @@ export default function Dashboard({ tasks }: DashboardProps) {
         </div>
     )
 
+        const formatDate = (date: string) => {
+        return new Date(date).toLocaleString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+        }).replace(",", "");
+    };
+
     return (
         <main>
             <div className="level">
@@ -60,11 +65,44 @@ export default function Dashboard({ tasks }: DashboardProps) {
                 </div>
             </div>
 
-            <div className="is-flex is-justify-content-space-between" style={{ margin: "1rem 0" }}>
+            <div className="columns is-flex is-justify-content-space-between is-3">
                 {icon(icons.todo, "Todo", todo.length)}
                 {icon(icons.inProgress, "In Progress", inProgress.length)}
                 {icon(icons.done, "Done", done.length)}
                 {icon(icons.overdue, "Overdue", overdue.length)}
+            </div>
+
+            <div className="rounded-table">
+                <table className="table is-hoverable is-fullwidth rounded-table task-table is-vcentered">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                Due Next
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {inProgress.map((task: Task) => (
+                            <tr key={task.id}>
+                                <td>{task.status}</td>
+                                <td>{task.title}</td>
+                                <td>{formatDate(task.dueDate)}</td>
+                            </tr>
+                        ))}
+                        {overdue.map((task: Task) => (
+                            <tr key={task.id}>
+                                <td>{task.status}</td>
+                                <td>{task.title}</td>
+                                <td>{formatDate(task.dueDate)}</td>
+                            </tr>
+                        ))}
+
+                    </tbody>
+                </table>
             </div>
 
         </main >
