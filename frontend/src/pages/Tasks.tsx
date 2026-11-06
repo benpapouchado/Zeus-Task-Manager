@@ -3,17 +3,10 @@ import { FetchTaskById } from '../components/RetrieveTask';
 import { CreateTaskModal } from '../components/CreateTaskModal';
 import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { EditTaskDropdown } from '../components/EditTaskDropdown';
+import type { Task } from "../type/Type";
 
 import "bulma/css/bulma.min.css";
 import "../App.css";
-
-export type Task = {
-    id: number;
-    title: string;
-    description: string;
-    status: string;
-    dueDate: string;
-};
 
 const API_URL = import.meta.env.VITE_API_URL;
 
