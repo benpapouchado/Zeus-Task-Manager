@@ -1,4 +1,4 @@
-import type { Task } from "../pages/Tasks";
+import type { Task } from "../type/Type";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

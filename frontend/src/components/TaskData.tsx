@@ -1,21 +1,15 @@
 import { useEffect, useState, useContext, createContext } from 'react';
+import type { Task } from "../type/Type";
 
-type Task = {
-    id: number;
-    title: string;
-    description: string;
-    status: string;
-    dueDate: string;
-};
-
-const TaskContext = createContext<Task[]>([]);
+// const TaskContext = createContext<Task[]>([]);
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function FetchTaskData() {
 
-    const contextData = useContext(TaskContext);
+    // const contextData = useContext(TaskContext);
 
-    const [tasks, setTasks] = useState<Task[]>(contextData);
+    const [tasks, setTasks] = useState<Task[]>([]);
+
 
     useEffect(() => {
         const fetchAllTasks = async () => {

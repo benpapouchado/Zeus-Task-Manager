@@ -1,12 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL;
+import type { Task } from "../type/Type";
 
-type Task = {
-    id: number;
-    title: string;
-    description: string;
-    status: string;
-    dueDate: string;
-};
+const API_URL = import.meta.env.VITE_API_URL;
 
 type Search = {
     searchId: string | null;

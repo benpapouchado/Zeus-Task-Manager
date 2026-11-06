@@ -2,7 +2,7 @@ import "bulma/css/bulma.min.css";
 import "../App.css";
 import { useState } from 'react';
 import { isValidTask, isValidTitle, isValidDescription, isValidStatus, isValidDueDate } from "../validate/Validation";
-import type { Task } from "../pages/Tasks";
+import type { Task } from "../type/Type";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
