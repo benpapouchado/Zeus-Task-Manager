@@ -60,7 +60,8 @@ export default function App() {
             error={error}
             setError={setError}
           />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard
+            tasks={tasks} />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
