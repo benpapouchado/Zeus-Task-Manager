@@ -33,7 +33,6 @@ export default function Dashboard({ tasks }: DashboardProps) {
 
     const icon = (label: keyof typeof icons, count: number) => (
         <div className="box column is-flex-grow-1 has-text-left is-one-fifth mg-large pg-large" >
-
             <span className="icon-text m-3">
                 <span className={icons[label][1]}>
                     <i className={icons[label][0]}></i>
@@ -42,11 +41,9 @@ export default function Dashboard({ tasks }: DashboardProps) {
                     {label}
                 </span>
             </span>
-
             <h1 className="ml-3" style={{ fontSize: "1.8em" }}>
                 <strong>{count}</strong>
             </h1>
-
         </div>
     )
 

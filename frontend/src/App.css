@@ -105,23 +105,32 @@ body,
 .rounded-table {
   border: 1px solid #dbdbdb;
   border-radius: 12px;
+  overflow: hidden;
 }
 
 .rounded-table .task-table {
   margin-bottom: 0;
   border: none;
-  border-radius: 0;
+  border-radius: 12px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.rounded-table .task-table th,
-.rounded-table .task-table td {
-  border-width: 0 0 1px;
-  justify-content: left;
-  align-items: left;
-  text-align: left;
-  vertical-align: middle;
+.rounded-table .task-table th:first-child {
+  border-top-left-radius: 12px;
 }
 
+.rounded-table .task-table th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.rounded-table .task-table tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+.rounded-table .task-table tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
 .title {
   font-size: 1.5rem;
   font-weight: 200;
@@ -197,4 +206,19 @@ body,
   cursor: pointer;
   color: #243047;
   background-color: #f0f4ff;
+}
+
+
+.dropdown.is-up .dropdown-menu {
+    top: auto;
+    bottom: 100%;
+}
+
+.dropdown-menu {
+    z-index: 100;
+}
+
+.dropdown-menu .dropdown-content {
+    max-height: inherit;
+    overflow-y: auto;
 }
