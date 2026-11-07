@@ -114,6 +114,7 @@ body,
   border-radius: 12px;
   border-collapse: separate;
   border-spacing: 0;
+  text-align: left;
 }
 
 .rounded-table .task-table th:first-child {
@@ -131,6 +132,7 @@ body,
 .rounded-table .task-table tr:last-child td:last-child {
   border-bottom-right-radius: 12px;
 }
+
 .title {
   font-size: 1.5rem;
   font-weight: 200;
@@ -210,15 +212,15 @@ body,
 
 
 .dropdown.is-up .dropdown-menu {
-    top: auto;
-    bottom: 100%;
+  top: auto;
+  bottom: 100%;
 }
 
 .dropdown-menu {
-    z-index: 100;
+  z-index: 100;
 }
 
 .dropdown-menu .dropdown-content {
-    max-height: inherit;
-    overflow-y: auto;
+  max-height: inherit;
+  overflow-y: auto;
 }
