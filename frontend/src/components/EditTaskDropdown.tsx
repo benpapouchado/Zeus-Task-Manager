@@ -34,7 +34,7 @@ export function EditTaskDropdown({
         "Done": "is-success",
     };
 
-    const buttonStyle = "button is-rounded is-fullwidth is-dark is-outlined " + statusStyles[taskStatus];
+    const buttonStyle = "button is-rounded is-fullwidth is-light " + statusStyles[taskStatus];
 
     const editTaskStatus = async (newStatus: string) => {
         try {

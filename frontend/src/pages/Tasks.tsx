@@ -90,7 +90,6 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
         return () => clearTimeout(timeout);
     }, [error]);
 
-
     const taskButton = (label: string) =>
         <div className="level-item">
             <button className="button is-fullwidth is-responsive is-rounded"
@@ -317,7 +316,7 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                 </td>
                                 <td>
                                     <div>{formatDate(task.dueDate)}</div>
-                                    <div> {overdue(task) && <span className="tag is-danger">Overdue</span>}</div>
+                                    <div> {overdue(task) && <span className="tag is-danger is-light is-outlined">Overdue</span>}</div>
                                 </td>
                             </tr>
                         ))}

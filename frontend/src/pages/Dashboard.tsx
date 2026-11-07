@@ -7,10 +7,10 @@ type DashboardProps = {
 export default function Dashboard({ tasks }: DashboardProps) {
 
     const icons = {
-        todo: "far fa-list-alt fa-lg",
-        inProgress: "far fa-clock fa-lg",
-        done: "far fa-check-circle fa-lg",
-        overdue: "fas fa-exclamation-triangle fa-lg"
+        "Todo": ["far fa-list-alt fa-lg", "icon is-light has-text-info"],
+        "In Progress": ["far fa-clock fa-lg", "icon is-light has-text-warning"],
+        "Done": ["far fa-check-circle fa-lg", "icon is-light has-text-success"],
+        "Overdue": ["fas fa-exclamation-triangle fa-lg", "icon is-light has-text-danger"]
     }
 
     const todo =
@@ -31,23 +31,26 @@ export default function Dashboard({ tasks }: DashboardProps) {
             return (new Date(row.dueDate) < now)
         });
 
-    const icon = (icon: string, label: string, count: number) => (
-        <div className="box column is-flex-grow-1 has-text-left is-one-fifth mg-medium" >
-            <div >
-                <span className="icon is-medium">
-                    <span className="mr-2">
-                        <i className={icon}></i>
-                    </span>
+    const icon = (label: keyof typeof icons, count: number) => (
+        <div className="box column is-flex-grow-1 has-text-left is-one-fifth mg-large pg-large" >
+
+            <span className="icon-text m-3">
+                <span className={icons[label][1]}>
+                    <i className={icons[label][0]}></i>
                 </span>
-                {label}
-                <h1 style={{ fontSize: "1.7em" }}>
-                    <strong>{count}</strong>
-                </h1>
-            </div>
+                <span className="ml-3">
+                    {label}
+                </span>
+            </span>
+
+            <h1 className="ml-3" style={{ fontSize: "1.8em" }}>
+                <strong>{count}</strong>
+            </h1>
+
         </div>
     )
 
-        const formatDate = (date: string) => {
+    const formatDate = (date: string) => {
         return new Date(date).toLocaleString("en-GB", {
             day: "2-digit",
             month: "short",
@@ -66,10 +69,10 @@ export default function Dashboard({ tasks }: DashboardProps) {
             </div>
 
             <div className="columns is-flex is-justify-content-space-between is-3">
-                {icon(icons.todo, "Todo", todo.length)}
-                {icon(icons.inProgress, "In Progress", inProgress.length)}
-                {icon(icons.done, "Done", done.length)}
-                {icon(icons.overdue, "Overdue", overdue.length)}
+                {icon("Todo", todo.length)}
+                {icon("In Progress", inProgress.length)}
+                {icon("Done", done.length)}
+                {icon("Overdue", overdue.length)}
             </div>
 
             <div className="rounded-table">
