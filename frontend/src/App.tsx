@@ -62,7 +62,8 @@ export default function App() {
           />} />
           <Route path="/dashboard" element={<Dashboard
             tasks={tasks} />} />
-          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/calendar" element={<Calendar
+          tasks={tasks} />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
       </Routes>
