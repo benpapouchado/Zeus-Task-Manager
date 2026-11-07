@@ -25,11 +25,11 @@ export default function Dashboard({ tasks }: DashboardProps) {
         tasks.filter((row) => row.status === "Done");
 
 
-    const overdue =
-        tasks.filter((row) => {
-            const now = new Date();
-            return (new Date(row.dueDate) < now)
-        });
+    const overdue = tasks.filter((row) =>
+        row.status !== "Done" && new Date(row.dueDate) < new Date()
+    );
+
+    const dueNext = [...inProgress, ...todo];
 
     const icon = (label: keyof typeof icons, count: number) => (
         <div className="box column is-flex-grow-1 has-text-left is-one-fifth mg-large pg-large" >
@@ -86,7 +86,7 @@ export default function Dashboard({ tasks }: DashboardProps) {
                     </thead>
 
                     <tbody>
-                        {inProgress.map((task: Task) => (
+                        {dueNext.map((task: Task) => (
                             <tr key={task.id}>
                                 <td>{task.status}</td>
                                 <td>{task.title}</td>
