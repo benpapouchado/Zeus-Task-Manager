@@ -27,9 +27,9 @@ export function EditTaskDropdown({
     const statuses = ["Todo", "In Progress", "Done"];
 
     const statusStyles: Record<string, string> = {
-        "Todo": "is-warning",
-        "In Progress": "is-info",
-        "Done": "is-success",
+        "Todo": "todo",
+        "In Progress": "in-progress",
+        "Done": "done",
     };
 
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -111,7 +111,7 @@ export function EditTaskDropdown({
     };
 
     const buttonStyle =
-        "button is-rounded is-fullwidth is-light " +
+        "button is-rounded is-fullwidth " +
         statusStyles[taskStatus];
 
     return (
@@ -119,7 +119,7 @@ export function EditTaskDropdown({
             ref={dropdownRef}
             className={`dropdown ${openUp ? "is-up" : ""} ${isOpen ? "is-active" : ""}`}
         >
-            <div className="dropdown-trigger">
+            <div className="dropdown-trigger status">
                 <button
                     className={buttonStyle}
                     aria-haspopup="true"

@@ -6,10 +6,10 @@ type DashboardProps = {
 
 export default function Dashboard({ tasks }: DashboardProps) {
 
-    const icons = {
-        "Todo": ["far fa-list-alt fa-lg", "icon is-light has-text-info", "is-info"],
-        "In Progress": ["far fa-clock fa-lg", "icon is-light has-text-warning", "is-warning"],
-        "Done": ["far fa-check-circle fa-lg", "icon is-light has-text-success"],
+    const style = {
+        "Todo": ["far fa-list-alt fa-lg", "icon is-light has-text-info", "todo"],
+        "In Progress": ["far fa-clock fa-lg", "icon is-light has-text-warning", "in-progress"],
+        "Done": ["far fa-check-circle fa-lg", "icon is-light has-text-success", "done"],
         "Overdue": ["fas fa-exclamation-triangle fa-lg", "icon is-light has-text-danger"]
     }
 
@@ -31,11 +31,11 @@ export default function Dashboard({ tasks }: DashboardProps) {
 
     const dueNext = [...inProgress, ...todo];
 
-    const icon = (label: keyof typeof icons, count: number) => (
+    const icon = (label: keyof typeof style, count: number) => (
         <div className="box column is-flex-grow-1 has-text-left is-one-fifth mg-large pg-large" >
             <span className="icon-text m-3">
-                <span className={icons[label][1]}>
-                    <i className={icons[label][0]}></i>
+                <span className={style[label][1]}>
+                    <i className={style[label][0]}></i>
                 </span>
                 <span className="ml-3">
                     {label}
@@ -89,8 +89,8 @@ export default function Dashboard({ tasks }: DashboardProps) {
                         {dueNext.map((task: Task) => (
                             <tr key={task.id}>
                                 <td>
-                                    <div>
-                                        {task.status}
+                                    <div className="status">
+                                        <div className={style[task.status as keyof typeof style][2]}>{task.status}</div>
                                     </div>
                                 </td>
                                 <td>{task.title}</td>

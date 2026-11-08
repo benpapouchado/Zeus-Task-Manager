@@ -134,10 +134,10 @@ body,
 }
 
 .task-table td:nth-child(6) {
-    text-align: right;
+  text-align: right;
 }
 
-.dashboard td:nth-child(3){
+.dashboard td:nth-child(3) {
   text-align: right;
 }
 
@@ -156,8 +156,37 @@ body,
   text-align: left;
 }
 
-.modal.is-active .modal-background {
-  background-color: transparent !important;
+.status {
+  float: left;
+
+  /* padding: 0px 7px; */
+  position: relative;
+  display: inline;
+  word-wrap: break-word;
+  position: relative;
+  z-index: 10;
+}
+
+.status .done {
+  color: #387416;
+  background: #c2ffd8;
+  border-radius: 20px;
+  padding: 10px;
+
+}
+
+.status .in-progress {
+  color: #a56219;
+  background: #f9e3bb;
+  border-radius: 20px;
+  padding: 8px;
+}
+
+.status .todo {
+  color: #676866;
+  background: #d9dbda;
+  border-radius: 20px;
+  padding: 10px;
 }
 
 .custom-modal {
@@ -231,4 +260,10 @@ body,
 .dropdown-menu .dropdown-content {
   max-height: inherit;
   overflow-y: auto;
+}
+
+.in-progress {
+  background-color: #ffc16b;
+  color: #7a621c;
+  border-radius: 12px;
 }
