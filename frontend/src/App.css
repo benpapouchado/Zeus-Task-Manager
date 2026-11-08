@@ -137,7 +137,7 @@ body,
   text-align: right;
 }
 
-.dashboard td:nth-child(3) {
+.dashboard-calendar td:nth-child(3) {
   text-align: right;
 }
 
@@ -170,7 +170,7 @@ body,
 .status .done {
   color: #387416;
   background: #c2ffd8;
-  border-radius: 20px;
+  border-radius: 25px;
   padding: 10px;
 
 }
@@ -178,14 +178,14 @@ body,
 .status .in-progress {
   color: #a56219;
   background: #f9e3bb;
-  border-radius: 20px;
-  padding: 8px;
+  border-radius: 25px;
+  padding: 10px;
 }
 
 .status .todo {
   color: #676866;
   background: #d9dbda;
-  border-radius: 20px;
+  border-radius: 25px;
   padding: 10px;
 }
 
