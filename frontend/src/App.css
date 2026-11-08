@@ -133,6 +133,14 @@ body,
   border-bottom-right-radius: 12px;
 }
 
+.task-table td:nth-child(6) {
+    text-align: right;
+}
+
+.dashboard td:nth-child(3){
+  text-align: right;
+}
+
 .title {
   font-size: 1.5rem;
   font-weight: 200;
