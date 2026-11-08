@@ -3,22 +3,23 @@ import { FetchTaskById } from '../components/RetrieveTask';
 import { CreateTaskModal } from '../components/CreateTaskModal';
 import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { EditTaskDropdown } from '../components/EditTaskDropdown';
+import { ViewTask } from '../components/ViewTaskModal';
 import type { Task } from "../type/Type";
 
 import "bulma/css/bulma.min.css";
 import "../App.css";
 
 type TaskProps = {
-    tasks : Task[],
+    tasks: Task[],
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
     success: string | null,
     setSuccess: React.Dispatch<React.SetStateAction<string | null>>,
-    error : string | null,
-    setError: React.Dispatch<React.SetStateAction<string | null>>, 
+    error: string | null,
+    setError: React.Dispatch<React.SetStateAction<string | null>>,
 }
 
 export default function Tasks({ tasks, setTasks, success, setSuccess, error, setError }
-    : TaskProps ) {
+    : TaskProps) {
 
     const taskActions = {
         newTask: "New Task",
@@ -35,14 +36,14 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
     const [selectedTaskButton, setSelectedTaskButton] = useState<string | null>(null);
     const [selectedFilterButton, setSelectedFilterButton] = useState<string | null>(statuses.all);
 
+    const [viewIsOpen, setViewIsOpen] = useState<Task | null>(null);
+
     const [searchId, setSearchId] = useState<number | null>(null);
     const [searchResult, setSearchResult] = useState<Task | null>(null);
 
     const [checked, setChecked] = useState<number[]>([]);
 
     const [dropdownOpenOnRow, setDropdownOpenOnRow] = useState<number | null>(null);
-
-    const [expandRow, setExpandRow] = useState<number[]>([]);
 
     const successText = [
         "Task created successfully",
@@ -147,7 +148,7 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
     };
 
     const allChecked = tasks.length > 0 &&
-    tasks.every(task => checked.includes(task.id));
+        tasks.every(task => checked.includes(task.id));
 
     const formatDate = (date: string) => {
         return new Date(date).toLocaleString("en-GB", {
@@ -171,32 +172,9 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
         return dueDate < now && task.status !== statuses.done;
     };
 
-    const expandedDescription = (task: Task) => {
-        const isExpanded = expandRow.includes(task.id);
-        const description = isExpanded ? task.description : task.description.slice(0, 20) + (task.description.length > 20 ? "..." : "");
-        return description;
-    }
-
-    const toggleExpandRow = (taskId: number) => {
-        if (expandRow.includes(taskId)) {
-            setExpandRow(expandRow.filter(id => id !== taskId));
-        } else {
-            setExpandRow([...expandRow, taskId]);
-        }
-    }
-
-    const expandRowIcon = (taskId: number, description: string) => {
-        const isExpanded = expandRow.includes(taskId);
-        const buttonLabel = isExpanded ? "fas fa-angle-up" : "fas fa-angle-down";
-
-        return (
-            description.length > 20 && (
-                <span className="icon mr-1">
-                    <i className={buttonLabel}></i>
-                </span>
-            )
-        );
-    }
+    const expandRow = (description: string) => (
+        description.length > 20 ? "Click to expand" : null
+    );
 
     return (
         <main >
@@ -215,6 +193,14 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                     setError: setError,
                     setSuccess: setSuccess,
                     setTasks
+                })}
+            </section>
+
+            <section>
+                {viewIsOpen !== null && ViewTask({
+                    viewIsOpen,
+                    setViewIsOpen,
+                    formatDate
                 })}
             </section>
 
@@ -269,7 +255,7 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
             {error !== null && (errorMessage(parseInt(error)))}
 
             <div className="rounded-table">
-                <table className="table is-hoverable is-fullwidth rounded-table task-table is-vcentered">
+                <table className="table is-fullwidth rounded-table task-table is-vcentered">
                     <thead>
                         <tr>
                             <th><label className="checkbox">
@@ -309,9 +295,9 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                     />
                                 </td>
                                 <td>
-                                    <span onClick={() => toggleExpandRow(task.id)} style={{ cursor: 'pointer' }}>
-                                        {expandRowIcon(task.id, task.description)}
-                                        {expandedDescription(task)}
+                                    <span onClick={() => setViewIsOpen(task)} style={{ cursor: 'pointer' }}>
+                                        <small> {expandRow(task.description)}</small> <br />
+                                        {task.description.slice(0, 20) + (task.description.length > 20 ? "..." : "")}
                                     </span>
                                 </td>
                                 <td>

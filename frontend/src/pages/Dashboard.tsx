@@ -7,8 +7,8 @@ type DashboardProps = {
 export default function Dashboard({ tasks }: DashboardProps) {
 
     const icons = {
-        "Todo": ["far fa-list-alt fa-lg", "icon is-light has-text-info"],
-        "In Progress": ["far fa-clock fa-lg", "icon is-light has-text-warning"],
+        "Todo": ["far fa-list-alt fa-lg", "icon is-light has-text-info", "is-info"],
+        "In Progress": ["far fa-clock fa-lg", "icon is-light has-text-warning", "is-warning"],
         "Done": ["far fa-check-circle fa-lg", "icon is-light has-text-success"],
         "Overdue": ["fas fa-exclamation-triangle fa-lg", "icon is-light has-text-danger"]
     }
@@ -73,7 +73,7 @@ export default function Dashboard({ tasks }: DashboardProps) {
             </div>
 
             <div className="rounded-table">
-                <table className="table is-hoverable is-fullwidth rounded-table task-table is-vcentered">
+                <table className="table is-fullwidth rounded-table task-table is-vcentered dashboard">
 
                     <thead>
                         <tr>
@@ -88,14 +88,11 @@ export default function Dashboard({ tasks }: DashboardProps) {
                     <tbody>
                         {dueNext.map((task: Task) => (
                             <tr key={task.id}>
-                                <td>{task.status}</td>
-                                <td>{task.title}</td>
-                                <td>{formatDate(task.dueDate)}</td>
-                            </tr>
-                        ))}
-                        {overdue.map((task: Task) => (
-                            <tr key={task.id}>
-                                <td>{task.status}</td>
+                                <td>
+                                    <div>
+                                        {task.status}
+                                    </div>
+                                </td>
                                 <td>{task.title}</td>
                                 <td>{formatDate(task.dueDate)}</td>
                             </tr>
