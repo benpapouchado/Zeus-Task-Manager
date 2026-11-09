@@ -1,5 +1,5 @@
 import type { Task } from '../type/Type';
-import { overdue, overdueTag, statusDisplay } from '../shared/Shared';
+import { overdue, overdueTag, statusDisplay, dueSoon, dueSoonTag } from '../shared/Shared';
 
 type DashboardProps = {
     tasks: Task[],
@@ -95,6 +95,7 @@ export default function Dashboard({ tasks }: DashboardProps) {
                                 <td className="is-vcentered">{task.title}</td>
                                 <td className="is-vcentered has-text-right">
                                     <span className="mx-3">{overdue(task) && overdueTag}</span>
+                                    <span className="mx-3">{dueSoon(task) && dueSoonTag}</span>
                                 {formatDate(task.dueDate)}
                                     
                                 </td>

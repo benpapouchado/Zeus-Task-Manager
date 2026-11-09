@@ -5,7 +5,7 @@ import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { EditTaskDropdown } from '../components/EditTaskDropdown';
 import { ViewTask } from '../components/ViewTaskModal';
 import type { Task } from "../type/Type";
-import { statuses, overdue, overdueTag, formatDate } from '../shared/Shared';
+import { statuses, overdue, overdueTag, formatDate, dueSoon, dueSoonTag } from '../shared/Shared';
 
 import "bulma/css/bulma.min.css";
 import "../App.css";
@@ -152,6 +152,8 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
         description.length > 20 ? "Click to expand" : null
     );
 
+    const rowWidth = 35;
+
     return (
         <main >
 
@@ -259,7 +261,13 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                     />
                                 </label></td>
                                 <td className="is-vcentered">#{task.id}</td>
-                                <td className="is-vcentered">{task.title}</td>
+                                <td className="is-vcentered">
+                                    <span onClick={() => setViewIsOpen(task)} style={{ cursor: 'pointer' }}>
+                                        {task.title.length > rowWidth && <small> {expandRow(task.title)}</small>}
+                                        {task.title.length > rowWidth ? <br /> : ""}
+                                        {task.title.slice(0, rowWidth) + (task.title.length > rowWidth ? "..." : "")}
+                                    </span>
+                                </td>
                                 <td className="is-vcentered">
                                     <EditTaskDropdown
                                         id={task.id}
@@ -273,14 +281,15 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                 </td>
                                 <td className="is-vcentered">
                                     <span onClick={() => setViewIsOpen(task)} style={{ cursor: 'pointer' }}>
-                                        {task.description.length > 20 && <small> {expandRow(task.description)}</small>}
-                                        {task.description.length > 20 ? <br /> : ""}
-                                        {task.description.slice(0, 20) + (task.description.length > 20 ? "..." : "")}
+                                        {task.description.length > rowWidth && <small> {expandRow(task.description)}</small>}
+                                        {task.description.length > rowWidth ? <br /> : ""}
+                                        {task.description.slice(0, rowWidth) + (task.description.length > rowWidth ? "..." : "")}
                                     </span>
                                 </td>
                                 <td className="is-vcentered">
-                                    <div>{formatDate(task.dueDate)}</div>
-                                    <div> {overdue(task) && overdueTag}</div>
+                                    {formatDate(task.dueDate)}
+                                    {overdue(task) && overdueTag}
+                                    {dueSoon(task) && dueSoonTag}
                                 </td>
                             </tr>
                         ))}

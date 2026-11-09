@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Task } from '../type/Type';
-import { overdue, overdueTag, statusDisplay } from '../shared/Shared';
+import { overdue, overdueTag, statusDisplay, dueSoon, dueSoonTag } from '../shared/Shared';
 
 type Calendar = {
     tasks: Task[],
@@ -56,6 +56,7 @@ export default function Calendar({ tasks }: Calendar) {
                                             <td width="120"
                                                 className="py-4">{formatDate(task.dueDate)}
                                                 {overdue(task) && overdueTag}
+                                                {dueSoon(task) && dueSoonTag}
                                             </td>
                                             <td width="120" 
                                             className="py-4">{task.title}</td>
