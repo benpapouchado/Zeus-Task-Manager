@@ -36,7 +36,8 @@ export default function Calendar({ tasks }: Calendar) {
         return dueDate < now && task.status !== "Done";
     };
 
-    tasks.forEach((task: Task) => {
+    tasks.sort((a : Task, b : Task) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
+    .forEach((task: Task) => {
         const month = formatMonths(task.dueDate);
         if (!months.includes(month)) {
             setMonths([...months, month])
