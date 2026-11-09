@@ -1,14 +1,15 @@
 
 const API_URL = import.meta.env.VITE_API_URL;
+import type { Dispatch, SetStateAction } from 'react';
 import type { Task } from "../type/Type";
 
 type DeleteTaskModalProps = {
     ids: number[];
-    setIds: React.Dispatch<React.SetStateAction<number[]>>;
+    setIds: Dispatch<SetStateAction<number[]>>;
     setSelectedTaskButton: (value: string) => void;
-    setError: React.Dispatch<React.SetStateAction<string | null>>;
-    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
-    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+    setError: Dispatch<SetStateAction<string | null>>;
+    setSuccess: Dispatch<SetStateAction<string | null>>;
+    setTasks: Dispatch<SetStateAction<Task[]>>;
 };
 
 export function DeleteTaskModal({ ids, setIds, setSelectedTaskButton, setError, setSuccess, setTasks }: DeleteTaskModalProps) {

@@ -1,10 +1,10 @@
 import type { Task } from "../type/Type";
 import { formatDate, overdue, overdueTag, statusDisplay, dueSoon, dueSoonTag } from '../shared/Shared';
-
+import type { Dispatch, SetStateAction } from 'react';
 
 type ViewTaskModal = {
     viewIsOpen: Task;
-    setViewIsOpen: React.Dispatch<React.SetStateAction<Task | null>>;
+    setViewIsOpen: Dispatch<SetStateAction<Task | null>>;
 };
 
 export function ViewTask({

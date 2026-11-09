@@ -1,5 +1,6 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
+import type { Dispatch, SetStateAction } from 'react';
 import type { Task } from "../type/Type";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -9,9 +10,9 @@ type Dropdown = {
     isOpen: boolean;
     taskStatus: string;
     setDropdownOpenOnRow: (value: number | null) => void;
-    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-    setError: React.Dispatch<React.SetStateAction<string | null>>;
-    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
+    setTasks: Dispatch<SetStateAction<Task[]>>;
+    setError: Dispatch<SetStateAction<string | null>>;
+    setSuccess: Dispatch<SetStateAction<string | null>>;
 };
 
 export function EditTaskDropdown({

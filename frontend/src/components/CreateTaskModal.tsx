@@ -1,6 +1,7 @@
 import "bulma/css/bulma.min.css";
 import "../App.css";
 import { useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { isValidTask, isValidTitle, isValidDescription, isValidStatus, isValidDueDate } from "../validate/Validation";
 import type { Task } from "../type/Type";
 import { statuses } from '../shared/Shared';
@@ -9,9 +10,9 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 type CreateTaskModalProps = {
     setSelectedTaskButton: (value: string) => void;
-    setError: React.Dispatch<React.SetStateAction<string | null>>;
-    setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
-    setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+    setError: Dispatch<SetStateAction<string | null>>;
+    setSuccess: Dispatch<SetStateAction<string | null>>;
+    setTasks: Dispatch<SetStateAction<Task[]>>;
 };
 
 export function CreateTaskModal({

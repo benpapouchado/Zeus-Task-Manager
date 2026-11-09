@@ -1,4 +1,5 @@
 import type { Task } from "../type/Type";
+import type { Dispatch, SetStateAction } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -7,7 +8,7 @@ type Search = {
     setSearchId: (value: number | null) => void;
     setSelectedFilterButton: (filterButton: string | null) => void;
     setSearchResult: (task: Task | null) => void;
-    setError: React.Dispatch<React.SetStateAction<string | null>>;
+    setError: Dispatch<SetStateAction<string | null>>;
 }
 
 export function FetchTaskById({ searchId, setSearchId, setSelectedFilterButton, setSearchResult, setError }: Search) {
