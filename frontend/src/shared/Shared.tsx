@@ -41,7 +41,6 @@ export const timeTilDue = (task: Task) => {
 
 export const dueSoon = (task: Task) => {
     const oneWeek = 7 * 24 * 60 * 60 * 1000;
-    console.log(new Date(task.dueDate).getTime() - new Date().getTime());
     return 0 < timeTilDue(task) && timeTilDue(task) <= oneWeek && 
     task.status !== statuses.done;
 }
