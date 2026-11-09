@@ -64,12 +64,14 @@ export default function Calendar({ tasks }: Calendar) {
                                 <tbody>
                                     {monthTasks.map((task: Task) => (
                                         <tr key={task.id}>
-                                            <td
+                                            <td width="120"
                                                 className="py-4">{formatDate(task.dueDate)}
                                                 {overdue(task) && <span className="tag is-danger is-light is-outlined ml-3">Overdue</span>}
                                             </td>
-                                            <td className="py-4">{task.title}</td>
-                                            <td className="py-4">
+                                            <td width="120" 
+                                            className="py-4">{task.title}</td>
+                                            <td width="120" 
+                                            className="py-4">
                                                 <div className="status">
                                                     <span className={style[task.status]}>{task.status}</span>
                                                 </div>
