@@ -30,22 +30,27 @@ public class Task {
     @Column(name = "due_date", nullable = false)
     private LocalDateTime dueDate;
 
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
     protected Task() {
     }
 
-    public Task(Long id, String title, String description, String status, LocalDateTime dueDate) {
+    public Task(Long id, String title, String description, String status, LocalDateTime dueDate, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
+        this.createdAt = createdAt;
     }
 
-    public Task(String title, String description, String status, LocalDateTime dueDate) {
+    public Task(String title, String description, String status, LocalDateTime dueDate, LocalDateTime createdAt) {
         this.title = title;
         this.description = description;
         this.status = status;
         this.dueDate = dueDate;
+        this.createdAt = createdAt;
     }
 
     public Task(String status) {
@@ -86,5 +91,13 @@ public class Task {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public LocalDateTime getCreatedAt(){
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt){
+        this.createdAt = createdAt;
     }
 }

@@ -4,4 +4,5 @@ export type Task = {
     description: string;
     status: string;
     dueDate: string;
+    createdAt: string;
 };

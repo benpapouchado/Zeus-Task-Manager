@@ -19,16 +19,17 @@ public class TaskRepositoryTest {
 
     @Test
     public void deleteRowsTest() {
-        LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime dueDate = now.plusDays(3);
 
         Task request1 = repository.save(new Task(
-                "Test task", "Description", "Todo", dueDate));
+                "Test task", "Description", "Todo", dueDate, now));
 
         Task request2 = repository.save(new Task(
-                "Test task 2", "Description of the second task", "In Progress", dueDate));
+                "Test task 2", "Description of the second task", "In Progress", dueDate, now));
 
         Task request3 = repository.save(new Task(
-                "Test task 3", "Description but its the third task again", "Done", dueDate));
+                "Test task 3", "Description but its the third task again", "Done", dueDate, now));
 
         assertTrue(repository.existsById(request1.getId()));
         assertTrue(repository.existsById(request2.getId()));
@@ -43,9 +44,10 @@ public class TaskRepositoryTest {
 
     @Test
     public void updateTaskByIdTest() {
-        LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime dueDate = now.plusDays(3);
 
-        Task task = repository.save(new Task("Test task", "Description", "Todo", dueDate));
+        Task task = repository.save(new Task("Test task", "Description", "Todo", dueDate, now));
         long id = task.getId();
 
         repository.updateTaskById(id, "In Progress");

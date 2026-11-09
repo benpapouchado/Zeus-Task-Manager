@@ -109,9 +109,10 @@ public class ValidationTest {
         assertTrue(Validation.isValidId(77L));
     }
 
-    @Test 
-    public void validTask(){
-        Task task = new Task(10L, "title", "Short Description", "Todo", LocalDateTime.now().plusDays(4));
+    @Test
+    public void validTask() {
+        Task task = new Task(10L, "title", "Short Description", "Todo", LocalDateTime.now().plusDays(4),
+                LocalDateTime.now());
         assertTrue(Validation.isValidTask(task));
     }
 

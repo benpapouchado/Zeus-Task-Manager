@@ -28,7 +28,7 @@ class TaskControllerTest {
                 LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
 
                 TaskController.CreateTaskRequest request = new TaskController.CreateTaskRequest(
-                                "Test task", "Description", "Todo", dueDate);
+                                "Test task", "Description", "Todo", dueDate, LocalDateTime.now());
 
                 ResponseEntity<Task> responseEntity = taskController.createTask(request);
 
@@ -55,13 +55,15 @@ class TaskControllerTest {
                 LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
 
                 TaskController.CreateTaskRequest request1 = new TaskController.CreateTaskRequest(
-                                "Test task", "Description", "Todo", dueDate);
+                                "Test task", "Description", "Todo", dueDate, LocalDateTime.now());
 
                 TaskController.CreateTaskRequest request2 = new TaskController.CreateTaskRequest(
-                                "Test task 2", "Description of the second task", "In Progress", dueDate);
+                                "Test task 2", "Description of the second task", "In Progress", dueDate,
+                                LocalDateTime.now());
 
                 TaskController.CreateTaskRequest request3 = new TaskController.CreateTaskRequest(
-                                "Test task 3", "Description but its the third task again", "Done", dueDate);
+                                "Test task 3", "Description but its the third task again", "Done", dueDate,
+                                LocalDateTime.now());
 
                 ResponseEntity<Task> responseEntity1 = taskController.createTask(request1);
                 ResponseEntity<Task> responseEntity2 = taskController.createTask(request2);
@@ -92,13 +94,15 @@ class TaskControllerTest {
                 LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
 
                 TaskController.CreateTaskRequest request1 = new TaskController.CreateTaskRequest(
-                                "Test task", "Description", "Todo", dueDate);
+                                "Test task", "Description", "Todo", dueDate, LocalDateTime.now());
 
                 TaskController.CreateTaskRequest request2 = new TaskController.CreateTaskRequest(
-                                "Test task 2", "Description of the second task", "In Progress", dueDate);
+                                "Test task 2", "Description of the second task", "In Progress", dueDate,
+                                LocalDateTime.now());
 
                 TaskController.CreateTaskRequest request3 = new TaskController.CreateTaskRequest(
-                                "Test task 3", "Description but its the third task again", "Done", dueDate);
+                                "Test task 3", "Description but its the third task again", "Done", dueDate,
+                                LocalDateTime.now());
 
                 ResponseEntity<Task> responseEntity1 = taskController.createTask(request1);
                 ResponseEntity<Task> responseEntity2 = taskController.createTask(request2);
@@ -109,9 +113,9 @@ class TaskControllerTest {
                 assertNotNull(responseEntity3);
 
                 List<Long> allTasks = List.of(responseEntity1.getBody().getId(),
-        responseEntity2.getBody().getId(), responseEntity3.getBody().getId());
+                                responseEntity2.getBody().getId(), responseEntity3.getBody().getId());
 
-                for(Long taskId : allTasks){
+                for (Long taskId : allTasks) {
                         assertTrue(allTasks.contains(taskId));
                 }
 
@@ -123,7 +127,8 @@ class TaskControllerTest {
                 LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
 
                 TaskController.CreateTaskRequest request = new TaskController.CreateTaskRequest(
-                                "Test task", "Description", "Todo", dueDate);
+                                "Test task", "Description", "Todo", dueDate,
+                                LocalDateTime.now());
 
                 Task responseEntity = taskController.createTask(request).getBody();
                 Task retrieveTask = taskController.getTask(responseEntity.getId()).getBody();
@@ -138,7 +143,8 @@ class TaskControllerTest {
                 LocalDateTime dueDate = LocalDateTime.now().plusDays(3);
 
                 TaskController.CreateTaskRequest request = new TaskController.CreateTaskRequest(
-                                "Test task", "Description", "Todo", dueDate);
+                                "Test task", "Description", "Todo", dueDate,
+                                LocalDateTime.now());
 
                 Task responseEntity = taskController.createTask(request).getBody();
                 taskController.updateTaskStatusById(responseEntity.getId(), new Task("Done"));

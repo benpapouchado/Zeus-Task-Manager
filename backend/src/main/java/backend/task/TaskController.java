@@ -42,7 +42,8 @@ public class TaskController {
             @NotBlank @Size(max = 50) String title,
             @Size(max = 200) String description,
             @Size(max = 50) String status,
-            LocalDateTime dueDate) {
+            LocalDateTime dueDate,
+            LocalDateTime createdAt) {
     }
 
     @GetMapping("/hello")
@@ -86,8 +87,8 @@ public class TaskController {
                 request.title().trim(),
                 request.description().trim(),
                 request.status().trim(),
-                request.dueDate())));
-
+                request.dueDate(),
+                LocalDateTime.now())));
     }
 
     @PatchMapping("/update/{id}")
