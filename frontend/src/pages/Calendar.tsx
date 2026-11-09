@@ -24,7 +24,7 @@ export default function Calendar({ tasks }: Calendar) {
         }).replace(",", "");
     };
 
-    tasks.sort((a : Task, b : Task) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
+    [...tasks].sort((a : Task, b : Task) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
     .forEach((task: Task) => {
         const month = formatMonths(task.dueDate);
         if (!months.includes(month)) {
@@ -55,7 +55,7 @@ export default function Calendar({ tasks }: Calendar) {
                                         <tr key={task.id}>
                                             <td width="120"
                                                 className="py-4">{formatDate(task.dueDate)}
-                                                {overdue(task) && <span className="tag is-danger is-light is-outlined ml-3">Overdue</span>}
+                                                {overdue(task) && overdueTag}
                                             </td>
                                             <td width="120" 
                                             className="py-4">{task.title}</td>
