@@ -178,6 +178,7 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
 
     return (
         <main >
+
             <section>
                 {selectedTaskButton === taskActions.newTask && <CreateTaskModal
                     setSelectedTaskButton={setSelectedTaskButton}
@@ -274,16 +275,16 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                     <tbody>
                         {filteredTasksWithSearch.map((task: Task) => (
                             <tr key={task.id}>
-                                <td><label className="checkbox">
+                                <td className="is-vcentered"><label className="checkbox">
                                     <input type="checkbox"
                                         value={task.id}
                                         checked={checked.includes(task.id)}
                                         onChange={(e) => checkboxAddsToDeleteList(Number(e.target.value))}
                                     />
                                 </label></td>
-                                <td>#{task.id}</td>
-                                <td>{task.title}</td>
-                                <td>
+                                <td className="is-vcentered">#{task.id}</td>
+                                <td className="is-vcentered">{task.title}</td>
+                                <td className="is-vcentered">
                                     <EditTaskDropdown
                                         id={task.id}
                                         isOpen={dropdownOpenOnRow === task.id}
@@ -294,13 +295,13 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                         setSuccess={setSuccess}
                                     />
                                 </td>
-                                <td>
+                                <td className="is-vcentered">
                                     <span onClick={() => setViewIsOpen(task)} style={{ cursor: 'pointer' }}>
                                         <small> {expandRow(task.description)}</small> <br />
                                         {task.description.slice(0, 20) + (task.description.length > 20 ? "..." : "")}
                                     </span>
                                 </td>
-                                <td>
+                                <td className="is-vcentered">
                                     <div>{formatDate(task.dueDate)}</div>
                                     <div> {overdue(task) && <span className="tag is-danger is-light is-outlined">Overdue</span>}</div>
                                 </td>

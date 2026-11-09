@@ -30,14 +30,18 @@ export default function Calendar({ tasks }: Calendar) {
         "Done": "done",
     }
 
+    const overdue = (task: Task) => {
+        const dueDate = new Date(task.dueDate);
+        const now = new Date();
+        return dueDate < now && task.status !== "Done";
+    };
+
     tasks.forEach((task: Task) => {
         const month = formatMonths(task.dueDate);
         if (!months.includes(month)) {
             setMonths([...months, month])
         }
     });
-
-    console.log(months);
 
     return (
         <main>
@@ -50,27 +54,31 @@ export default function Calendar({ tasks }: Calendar) {
             </div>
 
             {months.map((month: string) => {
-                const monthTasks = tasks.reverse().filter((task: Task) => formatMonths(task.dueDate) === month);
+                const monthTasks = tasks.filter((task: Task) => formatMonths(task.dueDate) === month);
 
                 return (
                     <div key={month}>
-                        <h1 className="text-align-left m-1"><strong>{month}</strong></h1>
-                        <table className="table is-fullwidth rounded-table task-table is-vcentered dashboard-calendar">
-                            <tbody>
-                                {monthTasks.map((task: Task, index: number) => (
-                                    <tr key={`${month}-${index}`}
-                                    className="my-1">
-                                        <td>{formatDate(task.dueDate)}</td>
-                                        <td>{task.title}</td>
-                                        <td>
-                                            <div className="status">
-                                                <span className={style[task.status]}>{task.status}</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <h1 className="text-align-left is-size-4 m-3"><strong>{month}</strong></h1>
+                        <div className="rounded-table">
+                            <table className="table is-fullwidth rounded-table task-table is-vcentered dashboard-calendar">
+                                <tbody>
+                                    {monthTasks.map((task: Task) => (
+                                        <tr key={task.id}>
+                                            <td
+                                                className="py-4">{formatDate(task.dueDate)}
+                                                {overdue(task) && <span className="tag is-danger is-light is-outlined ml-3">Overdue</span>}
+                                            </td>
+                                            <td className="py-4">{task.title}</td>
+                                            <td className="py-4">
+                                                <div className="status">
+                                                    <span className={style[task.status]}>{task.status}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 );
             })}

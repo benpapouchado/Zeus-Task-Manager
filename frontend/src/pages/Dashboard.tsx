@@ -72,7 +72,7 @@ export default function Dashboard({ tasks }: DashboardProps) {
                 {icon("Overdue", overdue.length)}
             </div>
 
-            <div className="rounded-table my-1">
+            <div className="rounded-table my-4">
                 <table className="table is-fullwidth rounded-table task-table dashboard-calendar">
 
                     <thead>
@@ -88,15 +88,15 @@ export default function Dashboard({ tasks }: DashboardProps) {
                     <tbody>
                         {dueNext.map((task: Task) => (
                             <tr key={task.id}>
-                                <td>
+                                <td className="is-vcentered">
                                     <div className="status">
                                         <div className={style[task.status as keyof typeof style][2]}>
                                             <span className="text-align-left">{task.status}</span>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{task.title}</td>
-                                <td>{formatDate(task.dueDate)}</td>
+                                <td className="is-vcentered">{task.title}</td>
+                                <td className="is-vcentered has-text-right">{formatDate(task.dueDate)}</td>
                             </tr>
                         ))}
 
