@@ -5,6 +5,7 @@ import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { EditTaskDropdown } from '../components/EditTaskDropdown';
 import { ViewTask } from '../components/ViewTaskModal';
 import type { Task } from "../type/Type";
+import { statuses, overdue, overdueTag, formatDate } from '../shared/Shared';
 
 import "bulma/css/bulma.min.css";
 import "../App.css";
@@ -25,13 +26,6 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
         newTask: "New Task",
         delete: "Delete Task"
     };
-
-    const statuses = {
-        all: "All",
-        todo: "Todo",
-        inProgress: "In Progress",
-        done: "Done",
-    }
 
     const [selectedTaskButton, setSelectedTaskButton] = useState<string | null>(null);
     const [selectedFilterButton, setSelectedFilterButton] = useState<string | null>(statuses.all);
@@ -124,7 +118,6 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                 </button>
             </div>
         );
-
     }
 
     const filterButton = (label: string) =>
@@ -150,27 +143,10 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
     const allChecked = tasks.length > 0 &&
         tasks.every(task => checked.includes(task.id));
 
-    const formatDate = (date: string) => {
-        return new Date(date).toLocaleString("en-GB", {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            hourCycle: "h23",
-        }).replace(",", "");
-    };
-
     const filteredTasks = selectedFilterButton === statuses.all ? tasks :
         tasks.filter((t: Task) => t.status === selectedFilterButton);
 
     const filteredTasksWithSearch = searchResult ? [searchResult] : filteredTasks;
-
-    const overdue = (task: Task) => {
-        const dueDate = new Date(task.dueDate);
-        const now = new Date();
-        return dueDate < now && task.status !== statuses.done;
-    };
 
     const expandRow = (description: string) => (
         description.length > 20 ? "Click to expand" : null
@@ -201,7 +177,6 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                 {viewIsOpen !== null && ViewTask({
                     viewIsOpen,
                     setViewIsOpen,
-                    formatDate
                 })}
             </section>
 
@@ -304,7 +279,7 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                 </td>
                                 <td className="is-vcentered">
                                     <div>{formatDate(task.dueDate)}</div>
-                                    <div> {overdue(task) && <span className="tag is-danger is-light is-outlined">Overdue</span>}</div>
+                                    <div> {overdue(task) && overdueTag}</div>
                                 </td>
                             </tr>
                         ))}

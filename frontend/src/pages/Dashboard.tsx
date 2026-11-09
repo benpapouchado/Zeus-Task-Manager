@@ -1,4 +1,5 @@
 import type { Task } from '../type/Type';
+import { overdue, overdueTag, statusDisplay } from '../shared/Shared';
 
 type DashboardProps = {
     tasks: Task[],
@@ -25,7 +26,7 @@ export default function Dashboard({ tasks }: DashboardProps) {
         tasks.filter((row) => row.status === "Done");
 
 
-    const overdue = tasks.filter((row) =>
+    const overDue = tasks.filter((row) =>
         row.status !== "Done" && new Date(row.dueDate) < new Date()
     );
 
@@ -69,7 +70,7 @@ export default function Dashboard({ tasks }: DashboardProps) {
                 {icon("Todo", todo.length)}
                 {icon("In Progress", inProgress.length)}
                 {icon("Done", done.length)}
-                {icon("Overdue", overdue.length)}
+                {icon("Overdue", overDue.length)}
             </div>
 
             <div className="rounded-table my-4">
@@ -89,14 +90,14 @@ export default function Dashboard({ tasks }: DashboardProps) {
                         {dueNext.map((task: Task) => (
                             <tr key={task.id}>
                                 <td className="is-vcentered">
-                                    <div className="status">
-                                        <div className={style[task.status as keyof typeof style][2]}>
-                                            <span className="text-align-left">{task.status}</span>
-                                        </div>
-                                    </div>
+                                    {statusDisplay(task.status)}
                                 </td>
                                 <td className="is-vcentered">{task.title}</td>
-                                <td className="is-vcentered has-text-right">{formatDate(task.dueDate)}</td>
+                                <td className="is-vcentered has-text-right">
+                                    <span className="mx-3">{overdue(task) && overdueTag}</span>
+                                {formatDate(task.dueDate)}
+                                    
+                                </td>
                             </tr>
                         ))}
 

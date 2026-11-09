@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Task } from '../type/Type';
+import { overdue, overdueTag, statusDisplay } from '../shared/Shared';
 
 type Calendar = {
     tasks: Task[],
@@ -29,12 +30,6 @@ export default function Calendar({ tasks }: Calendar) {
         "In Progress": "in-progress",
         "Done": "done",
     }
-
-    const overdue = (task: Task) => {
-        const dueDate = new Date(task.dueDate);
-        const now = new Date();
-        return dueDate < now && task.status !== "Done";
-    };
 
     tasks.sort((a : Task, b : Task) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
     .forEach((task: Task) => {
@@ -71,11 +66,8 @@ export default function Calendar({ tasks }: Calendar) {
                                             </td>
                                             <td width="120" 
                                             className="py-4">{task.title}</td>
-                                            <td width="120" 
-                                            className="py-4">
-                                                <div className="status">
-                                                    <span className={style[task.status]}>{task.status}</span>
-                                                </div>
+                                            <td width="120">
+                                                {statusDisplay(task.status)}
                                             </td>
                                         </tr>
                                     ))}

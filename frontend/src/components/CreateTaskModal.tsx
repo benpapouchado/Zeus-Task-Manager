@@ -3,6 +3,7 @@ import "../App.css";
 import { useState } from 'react';
 import { isValidTask, isValidTitle, isValidDescription, isValidStatus, isValidDueDate } from "../validate/Validation";
 import type { Task } from "../type/Type";
+import { statuses } from '../shared/Shared';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,12 +20,6 @@ export function CreateTaskModal({
     setSuccess,
     setTasks
 }: CreateTaskModalProps) {
-
-    const statuses = {
-        todo: "Todo",
-        inProgress: "In Progress",
-        done: "Done",
-    }
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -188,6 +183,19 @@ export function CreateTaskModal({
                                     }
                                 }} />
                         </div>
+                    </div>
+
+                    <div className="file has-name">
+                        <label className="file-label">
+                            <input className="file-input" type="file" name="resume" />
+                            <span className="file-cta">
+                                <span className="file-icon">
+                                    <i className="fas fa-upload"></i>
+                                </span>
+                                <span className="file-label"> Choose a file… </span>
+                            </span>
+                        
+                        </label>
                     </div>
                     {errorForm.dueDate && <p className="help is-danger">{errorForm.dueDate}</p>}
 
