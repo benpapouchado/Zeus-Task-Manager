@@ -14,7 +14,7 @@ export function ViewTask({
     const dueDateDisplay = overdue(viewIsOpen) ? (
         <span>
             <span>{formatDate(viewIsOpen.dueDate)}</span>
-            <span>{overdueTag}</span>
+            <span className="pt-2">{overdueTag}</span>
         </span>) : (<span>{formatDate(viewIsOpen.dueDate)}</span>);
 
     const column = {
@@ -41,13 +41,32 @@ export function ViewTask({
             <div className="modal-card custom-modal">
 
                 <section className="modal-card-body">
-                    {section("Title")}
-                    {section("Status")}
-                    {section("Description")}
-                    {section("Due Date")}
 
+                    <table className="table is-fullwidth">
+                        <tbody>
+                            <tr>
+                                <td width="100">
+                                    {section("Title")}
+                                </td>
+                                <td width="100">
+                                    {section("Status")}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="120">
+                                    <div>
+                                        {section("Description")}
+                                    </div>
+                                </td>
+                                <td width="100">
+                                    {section("Due Date")}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
                     <button
-                        className="button is-rounded"
+                        className="button is-rounded mt-2"
                         onClick={() => setViewIsOpen(null)}>
                         Close
                     </button>

@@ -1,8 +1,13 @@
 export default function Settings() {
     return (
-        <div className="settings">
-            <h1>Settings</h1>
-            <p>Welcome to the settings page!</p>
-        </div>
+        <main>
+            <div className="level">
+                <div className="level-left">
+                    <div className="level-item">
+                        <h1 className="title">Settings</h1>
+                    </div>
+                </div>
+            </div>
+        </main>
     );
 }
