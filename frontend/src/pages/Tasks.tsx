@@ -297,7 +297,8 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
                                 </td>
                                 <td className="is-vcentered">
                                     <span onClick={() => setViewIsOpen(task)} style={{ cursor: 'pointer' }}>
-                                        <small> {expandRow(task.description)}</small> <br />
+                                        {task.description.length > 20 && <small> {expandRow(task.description)}</small>}
+                                        {task.description.length > 20 ? <br /> : ""}
                                         {task.description.slice(0, 20) + (task.description.length > 20 ? "..." : "")}
                                     </span>
                                 </td>
