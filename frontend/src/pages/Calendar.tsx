@@ -24,13 +24,6 @@ export default function Calendar({ tasks }: Calendar) {
         }).replace(",", "");
     };
 
-
-    const style: Record<string, string> = {
-        "Todo": "todo",
-        "In Progress": "in-progress",
-        "Done": "done",
-    }
-
     tasks.sort((a : Task, b : Task) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
     .forEach((task: Task) => {
         const month = formatMonths(task.dueDate);

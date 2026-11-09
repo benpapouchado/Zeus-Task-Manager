@@ -166,6 +166,7 @@ export default function Tasks({ tasks, setTasks, success, setSuccess, error, set
             <section>
                 {selectedTaskButton === taskActions.delete && DeleteTaskModal({
                     ids: checked,
+                    setIds: setChecked,
                     setSelectedTaskButton,
                     setError: setError,
                     setSuccess: setSuccess,

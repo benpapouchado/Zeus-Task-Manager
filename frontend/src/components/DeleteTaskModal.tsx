@@ -4,13 +4,14 @@ import type { Task } from "../type/Type";
 
 type DeleteTaskModalProps = {
     ids: number[];
+    setIds: React.Dispatch<React.SetStateAction<number[]>>;
     setSelectedTaskButton: (value: string) => void;
     setError: React.Dispatch<React.SetStateAction<string | null>>;
     setSuccess: React.Dispatch<React.SetStateAction<string | null>>;
     setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
 };
 
-export function DeleteTaskModal({ ids, setSelectedTaskButton, setError, setSuccess, setTasks }: DeleteTaskModalProps) {
+export function DeleteTaskModal({ ids, setIds, setSelectedTaskButton, setError, setSuccess, setTasks }: DeleteTaskModalProps) {
 
     const deleteTasks = async () => {
         try {
@@ -26,6 +27,7 @@ export function DeleteTaskModal({ ids, setSelectedTaskButton, setError, setSucce
             setSuccess("1");
             setSelectedTaskButton("");
             setError(null);
+            setIds([]);
 
         } catch (error) {
             console.error('Error fetching tasks:', error);
