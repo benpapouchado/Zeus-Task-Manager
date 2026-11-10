@@ -165,8 +165,6 @@ Run all backend tests:
 ## Future Improvements
 
 - Containerise the frontend, backend and database using Docker.
-- Deleting every task should disable the delete button
 - Introduce task archiving and the ability to send tasks to deletion bin, which are fully deleted when the bin is emptied.
 - Implement idempotency for the task creation endpoint to help prevent duplicate tasks from repeated tries of the same request.
-- Complete the Dashboard, Calendar and Settings pages.
 - Add frontend unit and component tests.
