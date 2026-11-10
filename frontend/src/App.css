@@ -105,7 +105,7 @@ body,
 .rounded-table {
   border: 1px solid #dbdbdb;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .rounded-table .task-table {
@@ -162,10 +162,10 @@ body,
 }
 
 .status {
-  float: left;
-
-  /* padding: 0px 7px; */
-  position: relative;
+    position: relative;
+  display: inline-block;
+  z-index: 20;
+  /* float: left; */
   display: inline;
   word-wrap: break-word;
   position: relative;
@@ -252,14 +252,23 @@ body,
   background-color: #f0f4ff;
 }
 
+.dropdown {
+  position: relative;
+}
+
 
 .dropdown.is-up .dropdown-menu {
   top: auto;
   bottom: 100%;
 }
 
-.dropdown-menu {
+.dropdown.is-active {
   z-index: 100;
+}
+
+.dropdown-menu {
+  z-index: 1000;
+  min-width: 100%;
 }
 
 .dropdown-menu .dropdown-content {
